@@ -1,3 +1,7 @@
+// pelo visto tem DrawTextures, não o pro, que é mais simples
+
+
+
 #include "raylib.h"
 
 //------------------------------------------------------------------------------------
