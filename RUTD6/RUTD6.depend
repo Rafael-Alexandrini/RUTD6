@@ -2,6 +2,9 @@
 1721242518 source:c:\users\ralex\documents\github\rutd6\rutd6\exemplo-draw-textures.c
 	"raylib.h"
 
-1721243563 source:c:\users\ralex\documents\github\rutd6\rutd6\main.c
+1721245423 source:c:\users\ralex\documents\github\rutd6\rutd6\main.c
 	"raylib.h"
+
+1721246305 source:c:\users\ralex\documents\github\rutd6\rutd6\construtor-mapa.c
+	<stdio.h>
 
