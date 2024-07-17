@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1721242173 source:c:\users\ralex\documents\github\rutd6\rutd6\exemplo-draw-textures.c
+	"raylib.h"
+
+1721242279 source:c:\users\ralex\documents\github\rutd6\rutd6\main.c
+	"raylib.h"
+
