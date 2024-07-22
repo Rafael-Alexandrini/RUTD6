@@ -41,8 +41,8 @@ int main()
 "W             W   R      WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 
-    int posX = 300;
-    int posY = 300;
+    int playerX = 15;
+    int playerY = 15;
 
     InitWindow(LARGURA, ALTURA, "RUTD6");
     SetTargetFPS(60);
@@ -53,15 +53,15 @@ int main()
 
         // Movimento do Jogador  // Remover coisa do shift antes de lançar
         if (IsKeyDown(KEY_LEFT_SHIFT)){
-            if (IsKeyDown(KEY_UP)) tentaMover(&posX, &posY, 0, -1, mapa, TAM_GRID);
-            if (IsKeyDown(KEY_DOWN)) tentaMover(&posX, &posY, 0, 1, mapa, TAM_GRID);
-            if (IsKeyDown(KEY_LEFT)) tentaMover(&posX, &posY, -1, 0, mapa, TAM_GRID);
-            if (IsKeyDown(KEY_RIGHT)) tentaMover(&posX, &posY, 1, 0, mapa, TAM_GRID);
+            if (IsKeyDown(KEY_UP)) tentaMover(&playerX, &playerY, 0, -1, mapa);
+            if (IsKeyDown(KEY_DOWN)) tentaMover(&playerX, &playerY, 0, 1, mapa);
+            if (IsKeyDown(KEY_LEFT)) tentaMover(&playerX, &playerY, -1, 0, mapa);
+            if (IsKeyDown(KEY_RIGHT)) tentaMover(&playerX, &playerY, 1, 0, mapa);
         } else{
-            if (IsKeyPressed(KEY_UP)) tentaMover(&posX, &posY, 0, -1, mapa, TAM_GRID);
-            if (IsKeyPressed(KEY_DOWN)) tentaMover(&posX, &posY, 0, 1, mapa, TAM_GRID);
-            if (IsKeyPressed(KEY_LEFT)) tentaMover(&posX, &posY, -1, 0, mapa, TAM_GRID);
-            if (IsKeyPressed(KEY_RIGHT)) tentaMover(&posX, &posY, 1, 0, mapa, TAM_GRID);
+            if (IsKeyPressed(KEY_UP)) tentaMover(&playerX, &playerY, 0, -1, mapa);
+            if (IsKeyPressed(KEY_DOWN)) tentaMover(&playerX, &playerY, 0, 1, mapa);
+            if (IsKeyPressed(KEY_LEFT)) tentaMover(&playerX, &playerY, -1, 0, mapa);
+            if (IsKeyPressed(KEY_RIGHT)) tentaMover(&playerX, &playerY, 1, 0, mapa);
         }
 
 
@@ -69,7 +69,7 @@ int main()
         BeginDrawing();
         ClearBackground(RAYWHITE);
         desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID);
-        DrawRectangle(posX, posY, TAM_GRID, TAM_GRID, GREEN);
+        DrawRectangle(playerX * TAM_GRID, playerY * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
         EndDrawing();
     }
 
