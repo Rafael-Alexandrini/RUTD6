@@ -7,7 +7,7 @@
 #define N_COLUNAS 60
 #define N_LINHAS 30
 #define TAM_GRID 20
-#define N_MAX_MONSTROS 20
+#define N_MAX_MONSTROS 10
 
 
 int main()
@@ -20,21 +20,21 @@ int main()
 "WWWWWWWW H               W W         W W                   W",
 "WWWWWWWW W               W W  R      WMW                   W",
 "WWWWWWWW W               W W         W W            R      W",
-"S        W           R   W W         WMW                   W",
+"S        W           R   H H         WMW                   W",
 "WWWWWWWWWW               W W         W W                   W",
-"W                        W W         W W                   W",
-"W                        W W         H H      R            W",
+"W                        H H         W W                   W",
+"W                        H H         H H      R            W",
 "W                        W W         W W                   W",
 "W   R                    W W         W W                   W",
-"W                        W W         W WWWWWWWWWWWWHWWWWWWWW",
+"W                        W W         W WWWWWWWWHWWWHWWWWWWWW",
 "W                        H H         W                     W",
-"W                        W W         W WWWWWWWWWWWWHWWWWWWWW",
+"W                        W W         W WWWWWWWWHWWWHWWWWWWWW",
 "WWWWWWWWWWWWWWWWWWWWW WWWW W         W W             WWWWWWW",
 "W             WWWWWWW WWWW W         H H     J       W    WW",
 "W          R  H       WWWW W         W W             W WW WW",
-"W             WWWWWWW WWWW W         W WWWWWWWWWWWWWWW WW WW",
+"W             WWWWWWW WWWW W         W WWWWWWWWHHWWWWW WW WW",
 "W             WWWWWWW WWWW W         W                 WW WW",
-"W      R      WWWWWWW WWWW W         WWWWWWWWWWWWWWWWWWWW WW",
+"W      R      HWWWWWW WWWH H         WWWWWWWWWWHWWWWWWWWW WW",
 "W             WWWWWW  WWWW W                            W WW",
 "W        R    WWWWWW WWWWW W                            W WW",
 "W             WWWWWWHWWWWW W                            W WW",
@@ -65,15 +65,15 @@ int main()
 
         // Movimento do Jogador  // Remover coisa do shift antes de lançar
         if (IsKeyDown(KEY_LEFT_SHIFT)){
-            if (IsKeyDown(KEY_UP)) tentaMover(&player.x, &player.y, 0, -1, mapa);
-            if (IsKeyDown(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
-            if (IsKeyDown(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
-            if (IsKeyDown(KEY_RIGHT)) tentaMover(&player.x, &player.y, 1, 0, mapa);
+            if (IsKeyDown(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
+            if (IsKeyDown(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
+            if (IsKeyDown(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
+            if (IsKeyDown(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
         } else{
-            if (IsKeyPressed(KEY_UP)) tentaMover(&player.x, &player.y, 0, -1, mapa);
-            if (IsKeyPressed(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
-            if (IsKeyPressed(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
-            if (IsKeyPressed(KEY_RIGHT)) tentaMover(&player.x, &player.y, 1, 0, mapa);
+            if (IsKeyPressed(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
+            if (IsKeyPressed(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
+            if (IsKeyPressed(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
+            if (IsKeyPressed(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
         }
 
 
