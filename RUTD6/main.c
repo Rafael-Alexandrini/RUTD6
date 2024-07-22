@@ -49,11 +49,20 @@ int main()
 
     while(!WindowShouldClose())
     {
-        // Detecta Input
-        if (IsKeyPressed(KEY_UP)) posY -= TAM_GRID;
-        if (IsKeyPressed(KEY_DOWN)) posY += TAM_GRID;
-        if (IsKeyPressed(KEY_LEFT)) posX -= TAM_GRID;
-        if (IsKeyPressed(KEY_RIGHT)) posX += TAM_GRID;
+
+
+        // Movimento do Jogador  // Remover coisa do shift antes de lançar
+        if (IsKeyDown(KEY_LEFT_SHIFT)){
+            if (IsKeyDown(KEY_UP)) tentaMover(&posX, &posY, 0, -1, mapa, TAM_GRID);
+            if (IsKeyDown(KEY_DOWN)) tentaMover(&posX, &posY, 0, 1, mapa, TAM_GRID);
+            if (IsKeyDown(KEY_LEFT)) tentaMover(&posX, &posY, -1, 0, mapa, TAM_GRID);
+            if (IsKeyDown(KEY_RIGHT)) tentaMover(&posX, &posY, 1, 0, mapa, TAM_GRID);
+        } else{
+            if (IsKeyPressed(KEY_UP)) tentaMover(&posX, &posY, 0, -1, mapa, TAM_GRID);
+            if (IsKeyPressed(KEY_DOWN)) tentaMover(&posX, &posY, 0, 1, mapa, TAM_GRID);
+            if (IsKeyPressed(KEY_LEFT)) tentaMover(&posX, &posY, -1, 0, mapa, TAM_GRID);
+            if (IsKeyPressed(KEY_RIGHT)) tentaMover(&posX, &posY, 1, 0, mapa, TAM_GRID);
+        }
 
 
         // Atualiza frame e desenha quadrado
