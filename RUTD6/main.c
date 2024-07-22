@@ -1,15 +1,18 @@
 #include "raylib.h"
 #include "nossas_funcoes.h"
+#include "estruturas.h"
 
 #define LARGURA 1200
 #define ALTURA 600
 #define N_COLUNAS 60
 #define N_LINHAS 30
 #define TAM_GRID 20
+#define N_MAX_MONSTROS 20
 
 
 int main()
-{    char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
+{    int l, c, i;
+    char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 "WWWWWWWW                   W         WMW                   W",
 "WWWWWWWW WWWWWWWWWWWWWWWWW W         W W                   W",
@@ -41,26 +44,46 @@ int main()
 "W             W   R      WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 
-    int posX = 300;
-    int posY = 300;
+    struct posicao player = {15, 15};
+    for (l = 0; l < N_LINHAS; l++){
+        for (c = 0; c < N_COLUNAS; c++){
+            if (mapa[l][c] == 'J'){
+                player.x = c;
+                player.y = l;
+            }
+        }
+    }
+
+    struct posicao monstros[N_MAX_MONSTROS] = {{10, 10}, {16, 16}};
 
     InitWindow(LARGURA, ALTURA, "RUTD6");
     SetTargetFPS(60);
 
     while(!WindowShouldClose())
     {
-        // Detecta Input
-        if (IsKeyPressed(KEY_UP)) posY -= TAM_GRID;
-        if (IsKeyPressed(KEY_DOWN)) posY += TAM_GRID;
-        if (IsKeyPressed(KEY_LEFT)) posX -= TAM_GRID;
-        if (IsKeyPressed(KEY_RIGHT)) posX += TAM_GRID;
+
+
+        // Movimento do Jogador  // Remover coisa do shift antes de lançar
+        if (IsKeyDown(KEY_LEFT_SHIFT)){
+            if (IsKeyDown(KEY_UP)) tentaMover(&player.x, &player.y, 0, -1, mapa);
+            if (IsKeyDown(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
+            if (IsKeyDown(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
+            if (IsKeyDown(KEY_RIGHT)) tentaMover(&player.x, &player.y, 1, 0, mapa);
+        } else{
+            if (IsKeyPressed(KEY_UP)) tentaMover(&player.x, &player.y, 0, -1, mapa);
+            if (IsKeyPressed(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
+            if (IsKeyPressed(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
+            if (IsKeyPressed(KEY_RIGHT)) tentaMover(&player.x, &player.y, 1, 0, mapa);
+        }
 
 
         // Atualiza frame e desenha quadrado
         BeginDrawing();
         ClearBackground(RAYWHITE);
         desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID);
-        DrawRectangle(posX, posY, TAM_GRID, TAM_GRID, GREEN);
+        DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
+        for (i = 0; i < N_MAX_MONSTROS; i++)
+            DrawRectangle(monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, TAM_GRID, TAM_GRID, ORANGE);
         EndDrawing();
     }
 
@@ -69,6 +92,10 @@ int main()
 
 
 }
+
+
+
+
 /*
 char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",

@@ -34,6 +34,22 @@ void desenha_mapa(char mapa[31][61], int nLinhas, int nColunas, int tamGrid){
 
         }
     }
+}
 
+void tentaMover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
+    int podeMover = 1;
 
+    switch (mapa[*pY + dirY][*pX + dirX]){
+        case 'S':
+        case 'W':
+            podeMover = 0;
+            break;
+        default:
+            break;
+    }
+
+    if (podeMover){
+        *pX += dirX;
+        *pY += dirY;
+    }
 }
