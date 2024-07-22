@@ -36,12 +36,12 @@ void desenha_mapa(char mapa[31][61], int nLinhas, int nColunas, int tamGrid){
     }
 }
 
-void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
+void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61], int nLinhas, int nColunas){
     int podeMover = 1;
 
     switch (mapa[*pY + dirY][*pX + dirX]){
         case 'H':
-            entra_portal(pX, pY, dirX, dirY, mapa);
+            entra_portal(pX, pY, dirX, dirY, mapa, nLinhas, nColunas);
             break;
         case 'S':
         case 'W':
@@ -57,33 +57,34 @@ void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
     }
 }
 
-void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
+void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61], int nLinhas, int nColunas){
     int i;
-    int posHole = 0;
+    int indHole = 0;
+
     if (dirX == 1){
-        for (i = 0; i < 61; i++){
+        for (i = 0; i < nColunas; i++){
             if (mapa[*pY][i] == 'H')
-                posHole = i;
+                indHole = i;
         }
-        *pX = posHole;
+        *pX = indHole;
     } else if (dirX == -1){
-        for (i = 60; i > -1; i--){
+        for (i = nColunas - 1; i > -1; i--){
             if (mapa[*pY][i] == 'H')
-                posHole = i;
+                indHole = i;
         }
-        *pX = posHole;
+        *pX = indHole;
     } else if (dirY == 1){
-        for (i = 0; i < 31; i++){
+        for (i = 0; i < nLinhas; i++){
             if (mapa[i][*pX] == 'H')
-                posHole = i;
+                indHole = i;
         }
-        *pY = posHole;
+        *pY = indHole;
     } else if (dirY == -1){
-        for (i = 30; i > -1; i--){
+        for (i = nLinhas - 1; i > -1; i--){
             if (mapa[i][*pX] == 'H')
-                posHole = i;
+                indHole = i;
         }
-        *pY = posHole;
+        *pY = indHole;
     }
 
 }
