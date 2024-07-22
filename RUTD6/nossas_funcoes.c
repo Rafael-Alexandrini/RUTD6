@@ -49,7 +49,7 @@ void tentaMover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
     }
 
     if (podeMover){
-    *pX += dirX;
-    *pY += dirY;
+        *pX += dirX;
+        *pY += dirY;
     }
 }
