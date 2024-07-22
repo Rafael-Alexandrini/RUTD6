@@ -44,8 +44,6 @@ int main()
     int posX = 300;
     int posY = 300;
 
-    funcao_exemplo();
-
     InitWindow(LARGURA, ALTURA, "RUTD6");
     SetTargetFPS(60);
 
@@ -58,35 +56,10 @@ int main()
         if (IsKeyPressed(KEY_RIGHT)) posX += TAM_GRID;
 
 
-
         // Atualiza frame e desenha quadrado
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        for (int l = 0; l < N_LINHAS; l++){
-            for (int c = 0; c < N_COLUNAS; c++){
-                switch(mapa[l][c]){
-                    case 'W':
-                        DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, PURPLE);
-                        break;
-                    case 'H':
-                        DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, BLUE);
-                        break;
-                    case 'R':
-                        DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, RED);
-                        break;
-                    case 'S':
-                        DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, BLACK);
-                        break;
-                    case 'M':
-                        DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, YELLOW);
-                        break;
-                    default:
-                        break;
-
-                }
-
-            }
-        }
+        desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID);
         DrawRectangle(posX, posY, TAM_GRID, TAM_GRID, GREEN);
         EndDrawing();
     }
