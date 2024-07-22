@@ -31,6 +31,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="construtor-mapa.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="exemplo-draw-textures.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

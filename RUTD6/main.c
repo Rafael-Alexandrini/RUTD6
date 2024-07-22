@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "nossas_funcoes.h"
 
 #define LARGURA 1200
 #define ALTURA 600
@@ -42,6 +43,8 @@ int main()
 
     int posX = 300;
     int posY = 300;
+
+    funcao_exemplo();
 
     InitWindow(LARGURA, ALTURA, "RUTD6");
     SetTargetFPS(60);
