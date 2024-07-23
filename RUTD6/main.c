@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "nossas_funcoes.h"
 #include "estruturas.h"
+#include "nossas_funcoes.c"
 
 #define LARGURA 1200
 #define ALTURA 600
@@ -8,10 +9,19 @@
 #define N_LINHAS 30
 #define TAM_GRID 20
 #define N_MAX_MONSTROS 20
+<<<<<<< Updated upstream
+=======
+#define PLAYER_VIDAS 3
+>>>>>>> Stashed changes
 
 
 int main()
-{    int l, c, i;
+{   int l, c, i, b, posx;
+    Color cinzamorto = {176, 176, 176, 200};
+
+
+
+
     char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 "WWWWWWWW                   W         WMW                   W",
@@ -54,17 +64,38 @@ int main()
         }
     }
 
-    struct posicao monstros[N_MAX_MONSTROS] = {{10, 10}, {16, 16}};
+    struct posicao monstros[N_MAX_MONSTROS] = {{10, 10}, {16, 16}, {43, 18}};
+
+    int playerVidas = PLAYER_VIDAS;
+    int podeTomarDano = 1;
+    int framesCounter = 0;
+    int gameover = 1;
 
     InitWindow(LARGURA, ALTURA, "RUTD6");
     SetTargetFPS(60);
+
+    Texture2D base = LoadTexture("texturas/ru.png");
+    Texture2D vidas = LoadTexture("texturas/coração.png");
+    Texture2D estudante1 = LoadTexture("texturas/estudante 1.png");
+    Texture2D estudante2 = LoadTexture("texturas/estudante 2.png");
+    Texture2D estudante3 = LoadTexture("texturas/estudante 3.png");
+    Texture2D estudante4 = LoadTexture("texturas/estudante 4.png");
+    Texture2D obstaculo =  LoadTexture("texturas/prova calc.png");
 
     while(!WindowShouldClose())
     {
 
 
         // Movimento do Jogador  // Remover coisa do shift antes de lançar
+<<<<<<< Updated upstream
         if (IsKeyDown(KEY_LEFT_SHIFT)){
+=======
+
+        if (gameover == 1)
+        {
+
+            if (IsKeyDown(KEY_LEFT_SHIFT)){
+>>>>>>> Stashed changes
             if (IsKeyDown(KEY_UP)) tentaMover(&player.x, &player.y, 0, -1, mapa);
             if (IsKeyDown(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
             if (IsKeyDown(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
@@ -74,6 +105,11 @@ int main()
             if (IsKeyPressed(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
             if (IsKeyPressed(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
             if (IsKeyPressed(KEY_RIGHT)) tentaMover(&player.x, &player.y, 1, 0, mapa);
+<<<<<<< Updated upstream
+=======
+        }
+
+>>>>>>> Stashed changes
         }
 
 
@@ -82,19 +118,64 @@ int main()
         ClearBackground(RAYWHITE);
         desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID);
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
+
+        posx = 0;
+
+
+        switch (playerVidas)
+        {
+            case 3:
+            DrawTexture(vidas, 250, 18, WHITE);
+            case 2:
+            DrawTexture(vidas, 210, 18, WHITE);
+            case 1:
+            DrawTexture(vidas, 170, 18, WHITE);
+            break;
+            default:
+        }
+
+        DrawText("Vidas: ", 10, 10, 50, RED);
+        DrawText((TextFormat("%i", framesCounter)), 10, 100, 70, RED);
+        DrawText((TextFormat("%i", podeTomarDano)), 10, 200, 70, RED);
+
         for (i = 0; i < N_MAX_MONSTROS; i++)
-            DrawRectangle(monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, TAM_GRID, TAM_GRID, ORANGE);
+            {
+
+
+            DrawTexture(estudante4, monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
+            if ((monstros[i].x == player.x && monstros[i].y == player.y) && podeTomarDano == 1)
+                {
+                    podeTomarDano = 0;
+                    playerVidas--;
+                }
+            }
+
+        if (podeTomarDano == 0)
+            {
+            framesCounter++;
+            if (framesCounter == 60)
+                {
+                    podeTomarDano = 1;
+                    framesCounter = 0;
+                }
+            }
+
+        if (playerVidas <= 0 )
+        {
+            playerVidas = 0;
+            DrawRectangle(0, 0, LARGURA, ALTURA, cinzamorto);
+            DrawText("GAME OVER", 50, 230, 180, RED);
+            gameover = 0;
+        }
+
         EndDrawing();
+
+
     }
 
     CloseWindow();
     return 0;
-
-
 }
-
-
-
 
 /*
 char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {

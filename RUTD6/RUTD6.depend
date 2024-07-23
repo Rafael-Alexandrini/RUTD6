@@ -15,4 +15,28 @@
 	"raylib.h"
 
 1721681188 c:\users\ralex\documents\github\rutd6\rutd6\nossas_funcoes.h
+<<<<<<< Updated upstream
+=======
+
+1721733676 source:c:\users\artur\downloads\rutd6-mudan-as-22-07-artur\rutd6-mudan-as-22-07-artur\rutd6\construtor-mapa.c
+	<stdio.h>
+
+1721735170 source:c:\users\artur\downloads\rutd6-mudan-as-22-07-artur\rutd6-mudan-as-22-07-artur\rutd6\exemplo-draw-textures.c
+	"raylib.h"
+
+1721751698 source:c:\users\artur\downloads\rutd6-mudan-as-22-07-artur\rutd6-mudan-as-22-07-artur\rutd6\main.c
+	"raylib.h"
+	"nossas_funcoes.h"
+	"estruturas.h"
+	"nossas_funcoes.c"
+
+1721733676 c:\users\artur\downloads\rutd6-mudan-as-22-07-artur\rutd6-mudan-as-22-07-artur\rutd6\nossas_funcoes.h
+
+1721733676 c:\users\artur\downloads\rutd6-mudan-as-22-07-artur\rutd6-mudan-as-22-07-artur\rutd6\estruturas.h
+
+1721733676 c:\users\artur\downloads\rutd6-mudan-as-22-07-artur\rutd6-mudan-as-22-07-artur\rutd6\nossas_funcoes.c
+	"nossas_funcoes.h"
+	<stdio.h>
+	"raylib.h"
+>>>>>>> Stashed changes
 
