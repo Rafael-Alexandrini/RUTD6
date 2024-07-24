@@ -11,7 +11,7 @@
 #define N_LINHAS 30
 #define TAM_GRID 20
 #define N_MAX_MONSTROS 20
-#define PLAYER_VIDAS 3
+#define PLAYER_VIDAS 10
 
 
 int main()
@@ -73,16 +73,17 @@ int main()
     SetTargetFPS(60);
 
     Texture2D e[4] = {LoadTexture("texturas/estudante 1.png"), LoadTexture("texturas/estudante 2.png"), LoadTexture("texturas/estudante 3.png"), LoadTexture("texturas/estudante 4.png")};
-
-
     Texture2D base = LoadTexture("texturas/ru.png");
     Texture2D vidas = LoadTexture("texturas/coração.png");
-/*    Texture2D e[1] = LoadTexture("texturas/estudante 1.png");
+    Texture2D obstaculo =  LoadTexture("texturas/prova calc.png");
+    /*
+    Texture2D e[1] = LoadTexture("texturas/estudante 1.png");
     Texture2D e[2] = LoadTexture("texturas/estudante 2.png");
     Texture2D e[3] = LoadTexture("texturas/estudante 3.png");
     Texture2D e[4] = LoadTexture("texturas/estudante 4.png");
-    Texture2D obstaculo =  LoadTexture("texturas/prova calc.png");
-*/
+    */
+
+
     while(!WindowShouldClose())
     {
         // Movimento do Jogador  // Remover coisa do shift antes de lançar
@@ -109,7 +110,7 @@ int main()
         // Atualiza frame e desenha quadrado
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID);
+        desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID, obstaculo, base);
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
 
         int multiplo = 10;
