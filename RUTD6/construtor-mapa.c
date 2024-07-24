@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main2()
+int main()
 {
     char mapa[31][61];
     printf("Manda la: \n");
