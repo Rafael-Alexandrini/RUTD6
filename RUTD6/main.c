@@ -2,6 +2,8 @@
 #include "nossas_funcoes.h"
 #include "estruturas.h"
 #include "nossas_funcoes.c"
+#include <time.h>
+#include <stdlib.h>
 
 #define LARGURA 1200
 #define ALTURA 600
@@ -9,14 +11,11 @@
 #define N_LINHAS 30
 #define TAM_GRID 20
 #define N_MAX_MONSTROS 20
-<<<<<<< Updated upstream
-=======
-#define PLAYER_VIDAS 3
->>>>>>> Stashed changes
+#define PLAYER_VIDAS 10
 
 
 int main()
-{   int l, c, i, b, posx;
+{   int l, c, i, b;
     Color cinzamorto = {176, 176, 176, 200};
 
 
@@ -63,7 +62,6 @@ int main()
             }
         }
     }
-
     struct posicao monstros[N_MAX_MONSTROS] = {{10, 10}, {16, 16}, {43, 18}};
 
     int playerVidas = PLAYER_VIDAS;
@@ -74,54 +72,56 @@ int main()
     InitWindow(LARGURA, ALTURA, "RUTD6");
     SetTargetFPS(60);
 
+    Texture2D e[4] = {LoadTexture("texturas/estudante 1.png"), LoadTexture("texturas/estudante 2.png"), LoadTexture("texturas/estudante 3.png"), LoadTexture("texturas/estudante 4.png")};
     Texture2D base = LoadTexture("texturas/ru.png");
     Texture2D vidas = LoadTexture("texturas/coração.png");
-    Texture2D estudante1 = LoadTexture("texturas/estudante 1.png");
-    Texture2D estudante2 = LoadTexture("texturas/estudante 2.png");
-    Texture2D estudante3 = LoadTexture("texturas/estudante 3.png");
-    Texture2D estudante4 = LoadTexture("texturas/estudante 4.png");
     Texture2D obstaculo =  LoadTexture("texturas/prova calc.png");
+    /*
+    Texture2D e[1] = LoadTexture("texturas/estudante 1.png");
+    Texture2D e[2] = LoadTexture("texturas/estudante 2.png");
+    Texture2D e[3] = LoadTexture("texturas/estudante 3.png");
+    Texture2D e[4] = LoadTexture("texturas/estudante 4.png");
+    */
+
 
     while(!WindowShouldClose())
     {
-
-
         // Movimento do Jogador  // Remover coisa do shift antes de lançar
-<<<<<<< Updated upstream
-        if (IsKeyDown(KEY_LEFT_SHIFT)){
-=======
 
         if (gameover == 1)
         {
-
-            if (IsKeyDown(KEY_LEFT_SHIFT)){
->>>>>>> Stashed changes
-            if (IsKeyDown(KEY_UP)) tentaMover(&player.x, &player.y, 0, -1, mapa);
-            if (IsKeyDown(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
-            if (IsKeyDown(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
-            if (IsKeyDown(KEY_RIGHT)) tentaMover(&player.x, &player.y, 1, 0, mapa);
-        } else{
-            if (IsKeyPressed(KEY_UP)) tentaMover(&player.x, &player.y, 0, -1, mapa);
-            if (IsKeyPressed(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
-            if (IsKeyPressed(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
-            if (IsKeyPressed(KEY_RIGHT)) tentaMover(&player.x, &player.y, 1, 0, mapa);
-<<<<<<< Updated upstream
-=======
-        }
-
->>>>>>> Stashed changes
+            if (IsKeyDown(KEY_LEFT_SHIFT))
+                {
+                    if (IsKeyDown(KEY_UP)) tentaMover(&player.x, &player.y, 0, -1, mapa);
+                    if (IsKeyDown(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
+                    if (IsKeyDown(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
+                    if (IsKeyDown(KEY_RIGHT)) tentaMover(&player.x, &player.y, 1, 0, mapa);
+                }
+            else
+            {
+                if (IsKeyPressed(KEY_UP)) tentaMover(&player.x, &player.y, 0, -1, mapa);
+                if (IsKeyPressed(KEY_DOWN)) tentaMover(&player.x, &player.y, 0, 1, mapa);
+                if (IsKeyPressed(KEY_LEFT)) tentaMover(&player.x, &player.y, -1, 0, mapa);
+                if (IsKeyPressed(KEY_RIGHT)) tentaMover(&player.x, &player.y, 1, 0, mapa);
+            }
         }
 
 
         // Atualiza frame e desenha quadrado
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID);
+        desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID, obstaculo, base);
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
 
-        posx = 0;
+        int multiplo = 10;
 
+        for (b=0; b<playerVidas; b++)
+        {
+            multiplo = b * 40;
+            DrawTexture(vidas, 170 + multiplo, 18, WHITE);
+        }
 
+        /*
         switch (playerVidas)
         {
             case 3:
@@ -133,6 +133,7 @@ int main()
             break;
             default:
         }
+        */
 
         DrawText("Vidas: ", 10, 10, 50, RED);
         DrawText((TextFormat("%i", framesCounter)), 10, 100, 70, RED);
@@ -140,16 +141,13 @@ int main()
 
         for (i = 0; i < N_MAX_MONSTROS; i++)
             {
-
-
-            DrawTexture(estudante4, monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
+                DrawTexture(e[1], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
             if ((monstros[i].x == player.x && monstros[i].y == player.y) && podeTomarDano == 1)
                 {
                     podeTomarDano = 0;
                     playerVidas--;
                 }
             }
-
         if (podeTomarDano == 0)
             {
             framesCounter++;

@@ -7,7 +7,7 @@ void funcao_exemplo(){
 }
 
 
-void desenha_mapa(char mapa[31][61], int nLinhas, int nColunas, int tamGrid){
+void desenha_mapa(char mapa[31][61], int nLinhas, int nColunas, int tamGrid, Texture2D obstaculo, Texture2D base){
     int l, c;
     for (l = 0; l < nLinhas; l++){
         for (c = 0; c < nColunas; c++){
@@ -19,10 +19,10 @@ void desenha_mapa(char mapa[31][61], int nLinhas, int nColunas, int tamGrid){
                     DrawRectangle(c * tamGrid, l * tamGrid, tamGrid, tamGrid, BLUE);
                     break;
                 case 'R':
-                    DrawRectangle(c * tamGrid, l * tamGrid, tamGrid, tamGrid, RED);
+                    DrawTexture(obstaculo, c * tamGrid, l * tamGrid, WHITE);
                     break;
                 case 'S':
-                    DrawRectangle(c * tamGrid, l * tamGrid, tamGrid, tamGrid, BLACK);
+                    DrawTexture(base, c * tamGrid, l * tamGrid, WHITE);
                     break;
                 case 'M':
                     DrawRectangle(c * tamGrid, l * tamGrid, tamGrid, tamGrid, YELLOW);
