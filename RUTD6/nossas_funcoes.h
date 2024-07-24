@@ -5,7 +5,7 @@
 
 void funcao_exemplo();
 
-void desenha_mapa(char mapa[31][61], int nLinhas, int nColunas, int tamGrid);
+void desenha_mapa(char mapa[31][61], int nLinhas, int nColunas, int tamGrid, Texture2D obstaculo, Texture2D base);
 
 void tentaMover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]);
 
