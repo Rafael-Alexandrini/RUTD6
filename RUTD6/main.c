@@ -17,9 +17,7 @@
 int main()
 {   int l, c, i, b;
     Color cinzamorto = {176, 176, 176, 200};
-
-
-
+    Color caminho = {11, 140, 133, 255};
 
     char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
@@ -68,14 +66,21 @@ int main()
     int podeTomarDano = 1;
     int framesCounter = 0;
     int gameover = 1;
+    int numeroAleatorio;
+
+    srand(time(NULL));
+
+    numeroAleatorio = rand()%4;
 
     InitWindow(LARGURA, ALTURA, "RUTD6");
     SetTargetFPS(60);
 
+    Texture2D tijolo = LoadTexture("texturas/tijolo.png");
     Texture2D e[4] = {LoadTexture("texturas/estudante 1.png"), LoadTexture("texturas/estudante 2.png"), LoadTexture("texturas/estudante 3.png"), LoadTexture("texturas/estudante 4.png")};
     Texture2D base = LoadTexture("texturas/ru.png");
     Texture2D vidas = LoadTexture("texturas/coração.png");
     Texture2D obstaculo =  LoadTexture("texturas/prova calc.png");
+    Texture2D portal =  LoadTexture("texturas/portal.png");
     /*
     Texture2D e[1] = LoadTexture("texturas/estudante 1.png");
     Texture2D e[2] = LoadTexture("texturas/estudante 2.png");
@@ -110,7 +115,7 @@ int main()
         // Atualiza frame e desenha quadrado
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID, obstaculo, base);
+        desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID, caminho, tijolo, obstaculo, base, portal);
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
 
         int multiplo = 10;
@@ -141,7 +146,7 @@ int main()
 
         for (i = 0; i < N_MAX_MONSTROS; i++)
             {
-                DrawTexture(e[1], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
+                DrawTexture(e[numeroAleatorio], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
             if ((monstros[i].x == player.x && monstros[i].y == player.y) && podeTomarDano == 1)
                 {
                     podeTomarDano = 0;
