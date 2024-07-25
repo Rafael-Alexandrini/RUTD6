@@ -51,6 +51,8 @@ int main()
 "W             W   R      WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 
+
+
     struct posicao player = {15, 15};
     for (l = 0; l < N_LINHAS; l++){
         for (c = 0; c < N_COLUNAS; c++){
@@ -60,7 +62,7 @@ int main()
             }
         }
     }
-    struct Inimigo monstros[N_MAX_MONSTROS] = {{10, 10, 1, 0}, {16, 16, 1, 0}, {43, 18, 1, 0}};
+    struct Inimigo monstros[N_MAX_MONSTROS] = {{10, 10, 1, 0}, {38, 2, -1, 0}, {43, 18, 1, 0}};
 
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
@@ -117,7 +119,7 @@ int main()
             // A cada X ticks: movimento dos inimigos
             if(tickCounter % 10 == 0){
                 for (i=0; i<N_MAX_MONSTROS; i++){
-                    tenta_mover(&(monstros[i].x), &(monstros[i].y), monstros[i].dirx, monstros[i].diry, mapa, N_LINHAS, N_COLUNAS);
+                    move_inimigo(&(monstros[i].x), &(monstros[i].y), &(monstros[i].dirx), &(monstros[i].diry), mapa, N_LINHAS, N_COLUNAS);
                 }
             }
         }

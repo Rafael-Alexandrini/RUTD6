@@ -1,5 +1,6 @@
 #include "nossas_funcoes.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "raylib.h"
 
 void funcao_exemplo(){
@@ -88,4 +89,42 @@ void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61], int n
         *pY = indHole;
     }
 
+}
+
+void move_inimigo(int *pX, int *pY, int *dirX, int *dirY, char mapa[31][61], int nLinhas, int nColunas){
+    int podeMover = 1;
+
+    do{
+        podeMover = 1;
+        switch (mapa[*pY + *dirY][*pX + *dirX]){
+            case 'H':
+            case 'S':
+            case 'W':
+                podeMover = 0;
+                break;
+            default:
+                break;
+        }
+        if (podeMover == 0) nova_direcao(dirX, dirY);
+    } while (podeMover == 0);
+
+    if (podeMover){
+        *pX += *dirX;
+        *pY += *dirY;
+    }
+}
+
+void nova_direcao(int *dirX, int *dirY){
+    // 1 0 -> 0 1 ou 0 -1
+    // -1 0 -> 0 1 ou 0 -1
+    // 0 1 -> 1 0 ou -1 0
+    // 0 -1 -> -1 0 ou 1 0
+    if (*dirY == 0){
+        *dirX = 0;
+        *dirY = ((rand()%2) * 2) - 1;
+    }
+    else if (*dirX == 0){
+        *dirX = ((rand()%2) * 2) - 1;
+        *dirY = 0;
+    }
 }
