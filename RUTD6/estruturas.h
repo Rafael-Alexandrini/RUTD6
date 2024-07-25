@@ -7,5 +7,12 @@ struct posicao
     int x, y;
 };
 
+struct Inimigo
+{
+    int x, y;
+    int dirx, diry;
+    int idTextura;
+};
+
 
 #endif // ESTRUTURAS_H_

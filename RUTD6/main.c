@@ -10,7 +10,7 @@
 #define N_COLUNAS 60
 #define N_LINHAS 30
 #define TAM_GRID 20
-#define N_MAX_MONSTROS 20
+#define N_MAX_MONSTROS 3
 #define PLAYER_VIDAS 10
 
 
@@ -60,13 +60,15 @@ int main()
             }
         }
     }
-    struct posicao monstros[N_MAX_MONSTROS] = {{10, 10}, {16, 16}, {43, 18}};
+    struct Inimigo monstros[N_MAX_MONSTROS] = {{10, 10, 1, 0}, {16, 16, 1, 0}, {43, 18, 1, 0}};
 
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
     int framesCounter = 0;
     int gameover = 1;
     int numeroAleatorio;
+    float ultimo_tick = 0;
+    int tickCounter = 0;
 
     srand(time(NULL));
 
@@ -92,7 +94,6 @@ int main()
     while(!WindowShouldClose())
     {
         // Movimento do Jogador  // Remover coisa do shift antes de lançar
-
         if (gameover == 1)
         {
             if (IsKeyDown(KEY_LEFT_SHIFT)){
@@ -107,6 +108,22 @@ int main()
             if (IsKeyPressed(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa, N_LINHAS, N_COLUNAS);
         }
         }
+
+
+        // um tick (tudo dentro desse for) ocorre 16 vezes a cada segundo
+        if (GetTime() > ultimo_tick + 1/16.0){
+            ultimo_tick = GetTime();
+            tickCounter++;
+            // A cada X ticks: movimento dos inimigos
+            if(tickCounter % 10 == 0){
+                for (i=0; i<N_MAX_MONSTROS; i++){
+                    tenta_mover(&(monstros[i].x), &(monstros[i].y), monstros[i].dirx, monstros[i].diry, mapa, N_LINHAS, N_COLUNAS);
+                }
+            }
+        }
+
+
+
 
 
         // Atualiza frame e desenha quadrado
