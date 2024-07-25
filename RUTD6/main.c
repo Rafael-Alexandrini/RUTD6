@@ -14,7 +14,7 @@
 #define PLAYER_VIDAS 10
 
 
-int main2()
+int main()
 {   int l, c, i, b;
     Color cinzamorto = {176, 176, 176, 200};
     Color caminho = {11, 140, 133, 255};
