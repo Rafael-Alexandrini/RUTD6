@@ -2,7 +2,7 @@
 1721242518 source:c:\users\ralex\documents\github\rutd6\rutd6\exemplo-draw-textures.c
 	"raylib.h"
 
-1721946162 source:c:\users\ralex\documents\github\rutd6\rutd6\main.c
+1721955546 source:c:\users\ralex\documents\github\rutd6\rutd6\main.c
 	"raylib.h"
 	"nossas_funcoes.h"
 	"estruturas.h"
@@ -18,7 +18,7 @@
 	<stdio.h>
 	"raylib.h"
 
-1721946207 c:\users\ralex\documents\github\rutd6\rutd6\nossas_funcoes.h
+1721954844 c:\users\ralex\documents\github\rutd6\rutd6\nossas_funcoes.h
 	"raylib.h"
 
 1721681188 ated upstream
@@ -125,7 +125,7 @@
 1721864572 source:c:\users\administrator\desktop\rutd6\rutd6\construtor-mapa.c
 	<stdio.h>
 
-1721946208 c:\users\ralex\documents\github\rutd6\rutd6\nossas_funcoes.c
+1721955360 c:\users\ralex\documents\github\rutd6\rutd6\nossas_funcoes.c
 	"nossas_funcoes.h"
 	<stdio.h>
 	<stdlib.h>

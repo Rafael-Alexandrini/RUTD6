@@ -62,7 +62,8 @@ int main()
             }
         }
     }
-    struct Inimigo monstros[N_MAX_MONSTROS] = {{10, 10, 1, 0}, {38, 2, -1, 0}, {43, 18, 1, 0}};
+
+    struct Inimigo monstros[N_MAX_MONSTROS] = {{10, 10, 1, 0}, {38, 2, 0, 1}, {43, 18, 1, 0}};
 
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
@@ -117,7 +118,7 @@ int main()
             ultimo_tick = GetTime();
             tickCounter++;
             // A cada X ticks: movimento dos inimigos
-            if(tickCounter % 10 == 0){
+            if(tickCounter % 8 == 0){
                 for (i=0; i<N_MAX_MONSTROS; i++){
                     move_inimigo(&(monstros[i].x), &(monstros[i].y), &(monstros[i].dirx), &(monstros[i].diry), mapa, N_LINHAS, N_COLUNAS);
                 }
@@ -125,16 +126,36 @@ int main()
         }
 
 
+        // Vê se player deve tomar dano
+        for (i = 0; i < N_MAX_MONSTROS; i++){
+            if ((monstros[i].x == player.x && monstros[i].y == player.y) && podeTomarDano == 1){
+                podeTomarDano = 0;
+                playerVidas--;
+            }
+        }
+        if (podeTomarDano == 0){
+            framesCounter++;
+            if (framesCounter == 60){
+                podeTomarDano = 1;
+                framesCounter = 0;
+            }
+        }
 
 
 
-        // Atualiza frame e desenha quadrado
+
+        // Atualiza frame e desenha
         BeginDrawing();
         ClearBackground(RAYWHITE);
         desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID, caminho, tijolo, obstaculo, base, portal);
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
 
+        for (i = 0; i < N_MAX_MONSTROS; i++)
+            DrawTexture(e[numeroAleatorio], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
+
         int multiplo = 10;
+
+        DrawText("Vidas: ", 10, 10, 50, RED);
 
         for (b=0; b<playerVidas; b++)
         {
@@ -142,42 +163,6 @@ int main()
             DrawTexture(vidas, 170 + multiplo, 18, WHITE);
         }
 
-        /*
-        switch (playerVidas)
-        {
-            case 3:
-            DrawTexture(vidas, 250, 18, WHITE);
-            case 2:
-            DrawTexture(vidas, 210, 18, WHITE);
-            case 1:
-            DrawTexture(vidas, 170, 18, WHITE);
-            break;
-            default:
-        }
-        */
-
-        DrawText("Vidas: ", 10, 10, 50, RED);
-        DrawText((TextFormat("%i", framesCounter)), 10, 100, 70, RED);
-        DrawText((TextFormat("%i", podeTomarDano)), 10, 200, 70, RED);
-
-        for (i = 0; i < N_MAX_MONSTROS; i++)
-            {
-                DrawTexture(e[numeroAleatorio], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
-            if ((monstros[i].x == player.x && monstros[i].y == player.y) && podeTomarDano == 1)
-                {
-                    podeTomarDano = 0;
-                    playerVidas--;
-                }
-            }
-        if (podeTomarDano == 0)
-            {
-            framesCounter++;
-            if (framesCounter == 60)
-                {
-                    podeTomarDano = 1;
-                    framesCounter = 0;
-                }
-            }
 
         if (playerVidas <= 0 )
         {

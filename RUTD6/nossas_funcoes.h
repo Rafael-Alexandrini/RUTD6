@@ -14,6 +14,8 @@ void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61], int n
 
 void move_inimigo(int *pX, int *pY, int *dirX, int *dirY, char mapa[31][61], int nLinhas, int nColunas);
 
-void nova_direcao(int *dirX, int *dirY);
+void nova_direcao(int *dirX, int *dirY, int boolDirecao);
+
+int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61], int nLinhas, int nColunas);
 
 #endif // NOSSAS_FUNCOES_H_

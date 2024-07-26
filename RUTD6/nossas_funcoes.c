@@ -92,39 +92,77 @@ void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61], int n
 }
 
 void move_inimigo(int *pX, int *pY, int *dirX, int *dirY, char mapa[31][61], int nLinhas, int nColunas){
-    int podeMover = 1;
+    int dirXog = *dirX;
+    int dirYog = *dirY;
+    int randomDir = rand() % 2;
 
-    do{
-        podeMover = 1;
-        switch (mapa[*pY + *dirY][*pX + *dirX]){
-            case 'H':
-            case 'S':
-            case 'W':
-                podeMover = 0;
-                break;
-            default:
-                break;
-        }
-        if (podeMover == 0) nova_direcao(dirX, dirY);
-    } while (podeMover == 0);
 
-    if (podeMover){
+    // se não consegue mover na direção original, tenta ir pra uma ou outra. se não consegue, volta. se ainda não, para
+    if(pode_mover_inimigo(*pX, *pY, *dirX, *dirY, mapa, nLinhas, nColunas))
+    {
         *pX += *dirX;
         *pY += *dirY;
     }
+    else
+    {
+        nova_direcao(dirX, dirY, randomDir);
+        if(pode_mover_inimigo(*pX, *pY, *dirX, *dirY, mapa, nLinhas, nColunas))
+        {
+            *pX += *dirX;
+            *pY += *dirY;
+        }
+        else
+        {
+            *dirX = dirXog;
+            *dirY = dirYog;
+            nova_direcao(dirX, dirY, 1 - randomDir);
+            if(pode_mover_inimigo(*pX, *pY, *dirX, *dirY, mapa, nLinhas, nColunas))
+            {
+                *pX += *dirX;
+                *pY += *dirY;
+            }
+            else
+            {
+                *dirX = -dirXog;
+                *dirY = -dirYog;
+                if(pode_mover_inimigo(*pX, *pY, *dirX, *dirY, mapa, nLinhas, nColunas))
+                {
+                    *pX += *dirX;
+                    *pY += *dirY;
+                }
+            }
+        }
+    }
 }
 
-void nova_direcao(int *dirX, int *dirY){
+void nova_direcao(int *dirX, int *dirY, int boolDirecao){
     // 1 0 -> 0 1 ou 0 -1
     // -1 0 -> 0 1 ou 0 -1
     // 0 1 -> 1 0 ou -1 0
-    // 0 -1 -> -1 0 ou 1 0
+    // 0 -1 -> 1 0 ou -1 0
+    // boolDirecao (0 ou 1) indica uma direcao fixa. deve ser aleatório em outra função
     if (*dirY == 0){
         *dirX = 0;
-        *dirY = ((rand()%2) * 2) - 1;
+        *dirY = (boolDirecao * 2) - 1;
     }
     else if (*dirX == 0){
-        *dirX = ((rand()%2) * 2) - 1;
+        *dirX = (boolDirecao * 2) - 1;
         *dirY = 0;
     }
+}
+
+
+int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61], int nLinhas, int nColunas){
+    int podeMover = 1;
+
+    switch (mapa[pY + dirY][pX + dirX]){
+        case 'H':
+        case 'S':
+        case 'W':
+            podeMover = 0;
+            break;
+        default:
+            break;
+    }
+    return podeMover;
 }
