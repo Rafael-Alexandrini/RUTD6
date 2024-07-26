@@ -21,34 +21,34 @@ int main()
 
     char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-"WWWWWWWW                   W         WMW                   W",
-"WWWWWWWW WWWWWWWWWWWWWWWWW W         W W                   W",
-"WWWWWWWW W               W W         WMW                   W",
-"WWWWWWWW H               W W         W W                   W",
-"WWWWWWWW W               W W  R      WMW                   W",
-"WWWWWWWW W               W W         W W            R      W",
-"S        W           R   W W         WMW                   W",
-"WWWWWWWWWW               W W         W W                   W",
-"W                        W W         W W                   W",
-"W                        W W         H H      R            W",
-"W                        W W         W W                   W",
-"W   R                    W W         W W                   W",
-"W                        W W         W WWWWWWWWWWWWHWWWWWWWW",
-"W                        H H         W                     W",
-"W                        W W         W WWWWWWWWWWWWHWWWWWWWW",
-"WWWWWWWWWWWWWWWWWWWWW WWWW W         W W             WWWWWWW",
-"W             WWWWWWW WWWW W         H H     J       W    WW",
-"W          R  H       WWWW W         W W             W WW WW",
-"W             WWWWWWW WWWW W         W WWWWWWWWWWWWWWW WW WW",
-"W             WWWWWWW WWWW W         W                 WW WW",
-"W      R      WWWWWWW WWWW W         WWWWWWWWWWWWWWWWWWWW WW",
-"W             WWWWWW  WWWW W                            W WW",
-"W        R    WWWWWW WWWWW W                            W WW",
-"W             WWWWWWHWWWWW W                            W WW",
-"W             W          W W                   R        W WW",
-"W   R         W          W WWWWWWHWWWWWWWWWWWWWWWWWWWWWWW WW",
-"W             W          H                                WW",
-"W             W   R      WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"WWWWWWWW                 WWWWWWW                 WWWWWWWWWWW",
+"WWWWWWWW WWWWWWWWWWWWWWW WWWWWWW WWWWWWWWWWWWWWW WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W        R    W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W      J      H WWWWWWW H   R         W WWWWWWWWWWW",
+"WWWWWWWW W             H WWWWWWW H             W WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W       R     W WWWWWWWWWWW",
+"WWWWWWWW W  R          W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW WWWWWW  WWWWWWW WWWWWWW WWWWWWW  WWWWWW WWWWWWWWWWW",
+"WWWWWWWW                                                  SW",
+"WWWWWWWWWWWWWWWHHWWWWWWW WWW WWW WWWWWWWHHWWWWWW WWWWWWWWWWW",
+"W                                                WWWWWWWWWWW",
+"WWWWWWWWWWWWWWWHHWWWWWWW WWW WWW WWWWWWWHHWWWWWWWWWWWWWWWWWW",
+"WWWWWWWW                                         WWWWWWWWWWW",
+"WWWWWWWW WWWWWW  WWWWWWW WWWWWWW WWWWWWW  WWWWWW WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W         R   W WWWWWWWWWWW",
+"WWWWWWWW W     R       W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W             H WWWWWWW H     R       W WWWWWWWWWWW",
+"WWWWWWWW W             H WWWWWWW H             W WWWWWWWWWWW",
+"WWWWWWWW W        R    W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW WWWWWWWWWWWWWWW WWWWWWW WWWWWWWWWWWWWWW WWWWWWWWWWW",
+"WWWWWWWW                 WWWWWWW                 WWWWWWWWWWW",
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 
 
@@ -63,7 +63,7 @@ int main()
         }
     }
 
-    struct Inimigo monstros[N_MAX_MONSTROS] = {{10, 10, 1, 0}, {38, 2, 0, 1}, {43, 18, 1, 0}};
+    struct Inimigo monstros[N_MAX_MONSTROS] = {{1, 14, 1, 0}, {3, 14, 1, 0}, {5, 14, 1, 0}};
 
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
@@ -118,7 +118,7 @@ int main()
             ultimo_tick = GetTime();
             tickCounter++;
             // A cada X ticks: movimento dos inimigos
-            if(tickCounter % 8 == 0){
+            if(tickCounter % 1 == 0){
                 for (i=0; i<N_MAX_MONSTROS; i++){
                     move_inimigo(&(monstros[i].x), &(monstros[i].y), &(monstros[i].dirx), &(monstros[i].diry), mapa, N_LINHAS, N_COLUNAS);
                 }
@@ -314,4 +314,37 @@ char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
 "W        WMWWWWWWW                                 WWWWWWWWW",
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 
+mapa 5
+
+char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"WWWWWWWW                 WWWWWWW                 WWWWWWWWWWW",
+"WWWWWWWW WWWWWWWWWWWWWWW WWWWWWW WWWWWWWWWWWWWWW WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W        R    W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W      J      H WWWWWWW H   R         W WWWWWWWWWWW",
+"WWWWWWWW W             H WWWWWWW H             W WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W       R     W WWWWWWWWWWW",
+"WWWWWWWW W  R          W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW WWWWWW  WWWWWWW WWWWWWW WWWWWWW  WWWWWW WWWWWWWWWWW",
+"WWWWWWWW                                                  SW",
+"WWWWWWWWWWWWWWWHHWWWWWWW WWW WWW WWWWWWWHHWWWWWW WWWWWWWWWWW",
+"W                                                WWWWWWWWWWW",
+"WWWWWWWWWWWWWWWHHWWWWWWW WWW WWW WWWWWWWHHWWWWWWWWWWWWWWWWWW",
+"WWWWWWWW                                         WWWWWWWWWWW",
+"WWWWWWWW WWWWWW  WWWWWWW WWWWWWW WWWWWWW  WWWWWW WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W         R   W WWWWWWWWWWW",
+"WWWWWWWW W     R       W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W             H WWWWWWW H     R       W WWWWWWWWWWW",
+"WWWWWWWW W             H WWWWWWW H             W WWWWWWWWWWW",
+"WWWWWWWW W        R    W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW W             W WWWWWWW W             W WWWWWWWWWWW",
+"WWWWWWWW WWWWWWWWWWWWWWW WWWWWWW WWWWWWWWWWWWWWW WWWWWWWWWWW",
+"WWWWWWWW                 WWWWWWW                 WWWWWWWWWWW",
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 */
