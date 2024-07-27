@@ -15,49 +15,62 @@ int main()
 
     char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-"WW      WWWWWWWWW                  WWWWWWWWW              WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WW                                                        WW",
-"WW WWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WW WWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WW WWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WW WWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WW WWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WW WWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WW WWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WW WWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WW WWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WW                           J                            WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWW WW",
-"WWS                                                       WW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WWWWWWW WWWWWWWWW WWWWWWWWWWWWWWWW WWWWWWWWW WWWWWWWWWWWWWWW",
-"WWWWWWW           WWWWWWWWWWWWWWWW           WWWWWWWWWWWWWWW",
-"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"WWWWWWWW                   W         WMWWWWWW              W",
+"WWWWWWWW WWWWWWWWHWWWWWWWW W         W WWWWWWHWWWWWWWW   WWW",
+"WWWWWWWW W               W W         W W                   W",
+"WWWWWWWW W               W W         W W                   W",
+"WWWWWWWW W               W W  R      W W                   W",
+"WWWWWWWW W               W W         W W            R      W",
+"S        W           R   W W         W W                   W",
+"WWWWW   WW               W W         W W                   W",
+"W                        W W         W W                   W",
+"W                        W W                  R            W",
+"W                        W W                               W",
+"W   R                    H H         W W                   W",
+"W                                    W WWWWWWWWWWWWWWWWWWWWW",
+"W                        H H         W                     W",
+"W                        W W         W WWWWWWHWWWWWWWWWWWWWW",
+"WWWWWWHWWWWWWWWWWWWWWWWWWW W         W W             WWWWWWW",
+"W             WWWWWWWWWWWW W         W W     J       W    WW",
+"W          R          WWWW W         W W             W WW WW",
+"W             WWWWWWW WWWW W         W WWWWWWWWWWWWWWW WW WW",
+"W             WWWWWWW WWWW W         W                 WW WW",
+"W      R      WWWWWWW WWWW W         WWWWWWWWWWWWWWWWWWWW WW",
+"W             WWWWWW  WWWW W                            W WW",
+"W        R    WWWWWW WWWWW W                            W WW",
+"W             WWWWWWWWWWWW W                            W WW",
+"W             W          W W                   R        W WW",
+"W   R         W          W WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW WW",
+"W             H          W                                WW",
+"W             W   R      WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 
 
 
     struct posicao player = {15, 15};
+    struct posicao spawner = {10, 10};
     for (l = 0; l < N_LINHAS; l++){
         for (c = 0; c < N_COLUNAS; c++){
             if (mapa[l][c] == 'J'){
                 player.x = c;
                 player.y = l;
             }
+            else if (mapa[l][c] == 'M'){
+                spawner.x = c;
+                spawner.y = l;
+            }
         }
     }
 
     struct Inimigo monstros[N_MAX_MONSTROS] = {{3, 2, 1, 0}, {5, 2, 1, 0}, {7, 2, 1, 0}};
+    // Os monstros começam com uma posição fora da tela e uma textura aleatória
+    for (i = 0; i < N_MAX_MONSTROS; i++){
+        monstros[i].x = -1;
+        monstros[i].y = -1;
+        monstros[i].dirx = 1;
+        monstros[i].diry = 0;
+        monstros[i].idTextura = rand()%4;
+    }
 
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
@@ -66,6 +79,7 @@ int main()
     int numeroAleatorio;
     float ultimo_tick = 0;
     int tickCounter = 0;
+    int n_monstros_spawnados = 0;
 
     srand(time(NULL));
 
@@ -112,10 +126,15 @@ int main()
             ultimo_tick = GetTime();
             tickCounter++;
             // A cada X ticks: movimento dos inimigos
-            if(tickCounter % 1 == 0){
+            if(tickCounter % 8 == 0){
                 for (i=0; i<N_MAX_MONSTROS; i++){
                     move_inimigo(&(monstros[i]), mapa);
                 }
+            }
+            if(tickCounter % 24 == 0 && n_monstros_spawnados < N_MAX_MONSTROS){
+                monstros[n_monstros_spawnados].x = spawner.x;
+                monstros[n_monstros_spawnados].y = spawner.y;
+                n_monstros_spawnados++;
             }
         }
 
@@ -145,7 +164,7 @@ int main()
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
 
         for (i = 0; i < N_MAX_MONSTROS; i++)
-            DrawTexture(e[numeroAleatorio], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
+            DrawTexture(e[monstros[i].idTextura], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
 
         int multiplo = 10;
 

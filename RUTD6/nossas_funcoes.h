@@ -8,7 +8,7 @@
 #define N_COLUNAS 60
 #define N_LINHAS 30
 #define TAM_GRID 20
-#define N_MAX_MONSTROS 3
+#define N_MAX_MONSTROS 10
 #define PLAYER_VIDAS 10
 
 
