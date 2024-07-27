@@ -53,7 +53,7 @@ int main()
 
 
 
-    struct posicao player = {15, 15};
+    struct posicao player = {14, 14};
     for (l = 0; l < N_LINHAS; l++){
         for (c = 0; c < N_COLUNAS; c++){
             if (mapa[l][c] == 'J'){
