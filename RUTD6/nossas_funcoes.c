@@ -8,28 +8,28 @@ void funcao_exemplo(){
 }
 
 
-void desenha_mapa(char mapa[31][61], int nLinhas, int nColunas, int tamGrid, Color fundo, Texture2D tijolo, Texture2D obstaculo, Texture2D base, Texture2D portal){
+void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D obstaculo, Texture2D base, Texture2D portal){
     int l, c;
-    for (l = 0; l < nLinhas; l++){
-        for (c = 0; c < nColunas; c++){
+    for (l = 0; l < N_LINHAS; l++){
+        for (c = 0; c < N_COLUNAS; c++){
             switch(mapa[l][c]){
                 case 'W':
-                    DrawTexture(tijolo, c * tamGrid, l * tamGrid, WHITE);
+                    DrawTexture(tijolo, c * TAM_GRID, l * TAM_GRID, WHITE);
                     break;
                 case 'H':
-                    DrawTexture(portal, c * tamGrid, l * tamGrid, WHITE);
+                    DrawTexture(portal, c * TAM_GRID, l * TAM_GRID, WHITE);
                     break;
                 case 'R':
-                    DrawTexture(obstaculo, c * tamGrid, l * tamGrid, WHITE);
+                    DrawTexture(obstaculo, c * TAM_GRID, l * TAM_GRID, WHITE);
                     break;
                 case 'S':
-                    DrawTexture(base, c * tamGrid, l * tamGrid, WHITE);
+                    DrawTexture(base, c * TAM_GRID, l * TAM_GRID, WHITE);
                     break;
                 case 'M':
-                    DrawRectangle(c * tamGrid, l * tamGrid, tamGrid, tamGrid, YELLOW);
+                    DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, YELLOW);
                     break;
                 default:
-                    DrawRectangle(c * tamGrid, l * tamGrid, tamGrid, tamGrid, fundo);
+                    DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, fundo);
                     break;
 
             }
@@ -38,12 +38,12 @@ void desenha_mapa(char mapa[31][61], int nLinhas, int nColunas, int tamGrid, Col
     }
 }
 
-void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61], int nLinhas, int nColunas){
+void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
     int podeMover = 1;
 
     switch (mapa[*pY + dirY][*pX + dirX]){
         case 'H':
-            entra_portal(pX, pY, dirX, dirY, mapa, nLinhas, nColunas);
+            entra_portal(pX, pY, dirX, dirY, mapa);
             break;
         case 'S':
         case 'W':
@@ -59,30 +59,30 @@ void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61], int nL
     }
 }
 
-void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61], int nLinhas, int nColunas){
+void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
     int i;
     int indHole = 0;
 
     if (dirX == 1){
-        for (i = 0; i < nColunas; i++){
+        for (i = 0; i < N_COLUNAS; i++){
             if (mapa[*pY][i] == 'H')
                 indHole = i;
         }
         *pX = indHole;
     } else if (dirX == -1){
-        for (i = nColunas - 1; i > -1; i--){
+        for (i = N_COLUNAS - 1; i > -1; i--){
             if (mapa[*pY][i] == 'H')
                 indHole = i;
         }
         *pX = indHole;
     } else if (dirY == 1){
-        for (i = 0; i < nLinhas; i++){
+        for (i = 0; i < N_LINHAS; i++){
             if (mapa[i][*pX] == 'H')
                 indHole = i;
         }
         *pY = indHole;
     } else if (dirY == -1){
-        for (i = nLinhas - 1; i > -1; i--){
+        for (i = N_LINHAS - 1; i > -1; i--){
             if (mapa[i][*pX] == 'H')
                 indHole = i;
         }
@@ -91,44 +91,44 @@ void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61], int n
 
 }
 
-void move_inimigo(int *pX, int *pY, int *dirX, int *dirY, char mapa[31][61], int nLinhas, int nColunas){
-    int dirXog = *dirX;
-    int dirYog = *dirY;
+void move_inimigo(struct Inimigo *pInimigo, char mapa[31][61]){
+    int dirXog = pInimigo->dirx;
+    int dirYog = pInimigo->diry;
     int randomDir = rand() % 2;
 
 
     // se não consegue mover na direção original, tenta ir pra uma ou outra. se não consegue, volta. se ainda não, para
-    if(pode_mover_inimigo(*pX, *pY, *dirX, *dirY, mapa, nLinhas, nColunas))
+    if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa))
     {
-        *pX += *dirX;
-        *pY += *dirY;
+        pInimigo->x += pInimigo->dirx;
+        pInimigo->y += pInimigo->diry;
     }
     else
     {
-        nova_direcao(dirX, dirY, randomDir);
-        if(pode_mover_inimigo(*pX, *pY, *dirX, *dirY, mapa, nLinhas, nColunas))
+        nova_direcao(&(pInimigo->dirx), &(pInimigo->diry), randomDir);
+        if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa))
         {
-            *pX += *dirX;
-            *pY += *dirY;
+            pInimigo->x += pInimigo->dirx;
+            pInimigo->y += pInimigo->diry;
         }
         else
         {
-            *dirX = dirXog;
-            *dirY = dirYog;
-            nova_direcao(dirX, dirY, 1 - randomDir);
-            if(pode_mover_inimigo(*pX, *pY, *dirX, *dirY, mapa, nLinhas, nColunas))
+            pInimigo->dirx = dirXog;
+            pInimigo->diry = dirYog;
+            nova_direcao(&(pInimigo->dirx), &(pInimigo->diry), 1 - randomDir);
+            if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa))
             {
-                *pX += *dirX;
-                *pY += *dirY;
+                pInimigo->x += pInimigo->dirx;
+                pInimigo->y += pInimigo->diry;
             }
             else
             {
-                *dirX = -dirXog;
-                *dirY = -dirYog;
-                if(pode_mover_inimigo(*pX, *pY, *dirX, *dirY, mapa, nLinhas, nColunas))
+                pInimigo->dirx = -dirXog;
+                pInimigo->diry = -dirYog;
+                if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa))
                 {
-                    *pX += *dirX;
-                    *pY += *dirY;
+                    pInimigo->x += pInimigo->dirx;
+                    pInimigo->y += pInimigo->diry;
                 }
             }
         }
@@ -152,7 +152,7 @@ void nova_direcao(int *dirX, int *dirY, int boolDirecao){
 }
 
 
-int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61], int nLinhas, int nColunas){
+int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61]){
     int podeMover = 1;
 
     switch (mapa[pY + dirY][pX + dirX]){

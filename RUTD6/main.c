@@ -5,13 +5,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define LARGURA 1200
-#define ALTURA 600
-#define N_COLUNAS 60
-#define N_LINHAS 30
-#define TAM_GRID 20
-#define N_MAX_MONSTROS 3
-#define PLAYER_VIDAS 10
+
 
 
 int main()
@@ -100,15 +94,15 @@ int main()
         if (gameover == 1)
         {
             if (IsKeyDown(KEY_LEFT_SHIFT)){
-            if (IsKeyDown(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa, N_LINHAS, N_COLUNAS);
-            if (IsKeyDown(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa, N_LINHAS, N_COLUNAS);
-            if (IsKeyDown(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa, N_LINHAS, N_COLUNAS);
-            if (IsKeyDown(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa, N_LINHAS, N_COLUNAS);
+            if (IsKeyDown(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
+            if (IsKeyDown(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
+            if (IsKeyDown(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
+            if (IsKeyDown(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
         } else{
-            if (IsKeyPressed(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa, N_LINHAS, N_COLUNAS);
-            if (IsKeyPressed(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa, N_LINHAS, N_COLUNAS);
-            if (IsKeyPressed(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa, N_LINHAS, N_COLUNAS);
-            if (IsKeyPressed(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa, N_LINHAS, N_COLUNAS);
+            if (IsKeyPressed(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
+            if (IsKeyPressed(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
+            if (IsKeyPressed(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
+            if (IsKeyPressed(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
         }
         }
 
@@ -120,7 +114,7 @@ int main()
             // A cada X ticks: movimento dos inimigos
             if(tickCounter % 1 == 0){
                 for (i=0; i<N_MAX_MONSTROS; i++){
-                    move_inimigo(&(monstros[i].x), &(monstros[i].y), &(monstros[i].dirx), &(monstros[i].diry), mapa, N_LINHAS, N_COLUNAS);
+                    move_inimigo(&(monstros[i]), mapa);
                 }
             }
         }
@@ -147,7 +141,7 @@ int main()
         // Atualiza frame e desenha
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        desenha_mapa(mapa, N_LINHAS, N_COLUNAS, TAM_GRID, caminho, tijolo, obstaculo, base, portal);
+        desenha_mapa(mapa, caminho, tijolo, obstaculo, base, portal);
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
 
         for (i = 0; i < N_MAX_MONSTROS; i++)
