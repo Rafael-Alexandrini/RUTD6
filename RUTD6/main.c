@@ -45,7 +45,7 @@ int main()
 "W             W   R      WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 
-
+    srand(time(NULL));
 
     struct posicao player = {15, 15};
     struct posicao spawner = {10, 10};
@@ -76,30 +76,22 @@ int main()
     int podeTomarDano = 1;
     int framesCounter = 0;
     int gameover = 1;
-    int numeroAleatorio;
     float ultimo_tick = 0;
     int tickCounter = 0;
     int n_monstros_spawnados = 0;
 
-    srand(time(NULL));
 
-    numeroAleatorio = rand()%4;
 
     InitWindow(LARGURA, ALTURA, "RUTD6");
     SetTargetFPS(60);
 
     Texture2D tijolo = LoadTexture("texturas/tijolo.png");
-    Texture2D e[4] = {LoadTexture("texturas/estudante 1.png"), LoadTexture("texturas/estudante 2.png"), LoadTexture("texturas/estudante 3.png"), LoadTexture("texturas/estudante 4.png")};
+    Texture2D texturas[4] = {LoadTexture("texturas/estudante 1.png"), LoadTexture("texturas/estudante 2.png"), LoadTexture("texturas/estudante 3.png"), LoadTexture("texturas/estudante 4.png")};
     Texture2D base = LoadTexture("texturas/ru.png");
     Texture2D vidas = LoadTexture("texturas/coração.png");
     Texture2D obstaculo =  LoadTexture("texturas/prova calc.png");
     Texture2D portal =  LoadTexture("texturas/portal.png");
-    /*
-    Texture2D e[1] = LoadTexture("texturas/estudante 1.png");
-    Texture2D e[2] = LoadTexture("texturas/estudante 2.png");
-    Texture2D e[3] = LoadTexture("texturas/estudante 3.png");
-    Texture2D e[4] = LoadTexture("texturas/estudante 4.png");
-    */
+
 
 
     while(!WindowShouldClose())
@@ -164,7 +156,7 @@ int main()
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
 
         for (i = 0; i < N_MAX_MONSTROS; i++)
-            DrawTexture(e[monstros[i].idTextura], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
+            DrawTexture(texturas[monstros[i].idTextura], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
 
         int multiplo = 10;
 
