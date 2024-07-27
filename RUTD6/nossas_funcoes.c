@@ -41,16 +41,21 @@ void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D ob
 void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
     int podeMover = 1;
 
-    switch (mapa[*pY + dirY][*pX + dirX]){
-        case 'H':
-            entra_portal(pX, pY, dirX, dirY, mapa);
-            break;
-        case 'S':
-        case 'W':
-            podeMover = 0;
-            break;
-        default:
-            break;
+    if ((*pX + dirX) < 0 || (*pX + dirX) >= N_COLUNAS || (*pY + dirY) < 0 || (*pY + dirY) >= N_LINHAS){
+        podeMover = 0;
+    }
+    else{
+        switch (mapa[*pY + dirY][*pX + dirX]){
+            case 'H':
+                entra_portal(pX, pY, dirX, dirY, mapa);
+                break;
+            case 'S':
+            case 'W':
+                podeMover = 0;
+                break;
+            default:
+                break;
+        }
     }
 
     if (podeMover){
@@ -155,14 +160,20 @@ void nova_direcao(int *dirX, int *dirY, int boolDirecao){
 int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61]){
     int podeMover = 1;
 
-    switch (mapa[pY + dirY][pX + dirX]){
-        case 'H':
-        case 'S':
-        case 'W':
-            podeMover = 0;
-            break;
-        default:
-            break;
+    // se está dentro do mapa
+    if ((pX + dirX) < 0 || (pX + dirX) >= N_COLUNAS || (pY + dirY) < 0 || (pY + dirY) >= N_LINHAS){
+        podeMover = 0;
+    }
+    else{
+        switch (mapa[pY + dirY][pX + dirX]){
+            case 'H':
+            case 'S':
+            case 'W':
+                podeMover = 0;
+                break;
+            default:
+                break;
+        }
     }
     return podeMover;
 }

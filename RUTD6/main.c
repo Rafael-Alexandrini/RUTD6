@@ -67,7 +67,7 @@ int main()
     for (i = 0; i < N_MAX_MONSTROS; i++){
         monstros[i].x = -1;
         monstros[i].y = -1;
-        monstros[i].dirx = 1;
+        monstros[i].dirx = 0;
         monstros[i].diry = 0;
         monstros[i].idTextura = rand()%4;
     }
@@ -126,6 +126,8 @@ int main()
             if(tickCounter % 24 == 0 && n_monstros_spawnados < N_MAX_MONSTROS){
                 monstros[n_monstros_spawnados].x = spawner.x;
                 monstros[n_monstros_spawnados].y = spawner.y;
+                monstros[n_monstros_spawnados].dirx = 0;
+                monstros[n_monstros_spawnados].diry = 1;
                 n_monstros_spawnados++;
             }
         }
