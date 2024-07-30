@@ -56,13 +56,21 @@
 1721761938 source:c:\users\artur\documents\github\rutd6\rutd6\construtor-mapa.c
 	<stdio.h>
 
+<<<<<<< Updated upstream
 1721733676 source:c:\users\administrator\documents\github\rutd6\rutd6\construtor-mapa.c
+=======
+1722279473 source:c:\users\administrator\documents\github\rutd6\rutd6\construtor-mapa.c
+>>>>>>> Stashed changes
 	<stdio.h>
 
 1721735170 source:c:\users\administrator\documents\github\rutd6\rutd6\exemplo-draw-textures.c
 	"raylib.h"
 
+<<<<<<< Updated upstream
 1721843198 source:c:\users\administrator\documents\github\rutd6\rutd6\main.c
+=======
+1722297581 source:c:\users\administrator\documents\github\rutd6\rutd6\main.c
+>>>>>>> Stashed changes
 	"raylib.h"
 	"nossas_funcoes.h"
 	"estruturas.h"
@@ -70,14 +78,27 @@
 	<time.h>
 	<stdlib.h>
 
+<<<<<<< Updated upstream
 1721843159 c:\users\administrator\documents\github\rutd6\rutd6\nossas_funcoes.h
 	"raylib.h"
+=======
+1722297414 c:\users\administrator\documents\github\rutd6\rutd6\nossas_funcoes.h
+	"raylib.h"
+	"estruturas.h"
+>>>>>>> Stashed changes
 
-1721733676 c:\users\administrator\documents\github\rutd6\rutd6\estruturas.h
+1722297242 c:\users\administrator\documents\github\rutd6\rutd6\estruturas.h
 
+<<<<<<< Updated upstream
 1721843374 c:\users\administrator\documents\github\rutd6\rutd6\nossas_funcoes.c
 	"nossas_funcoes.h"
 	<stdio.h>
+=======
+1722293608 c:\users\administrator\documents\github\rutd6\rutd6\nossas_funcoes.c
+	"nossas_funcoes.h"
+	<stdio.h>
+	<stdlib.h>
+>>>>>>> Stashed changes
 	"raylib.h"
 
 1721735170 source:c:\users\administrator\desktop\rutd6\rutd6\exemplo-draw-textures.c

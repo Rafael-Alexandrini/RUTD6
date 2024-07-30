@@ -21,6 +21,7 @@ int main2()
 
     char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+<<<<<<< Updated upstream
 "WWWWWWWW                   W         WMW                   W",
 "WWWWWWWW WWWWWWWWWWWWWWWWW W         W W                   W",
 "WWWWWWWW W               W W         WMW                   W",
@@ -39,10 +40,31 @@ int main2()
 "WWWWWWWWWWWWWWWWWWWWW WWWW W         W W             WWWWWWW",
 "W             WWWWWWW WWWW W         H H     J       W    WW",
 "W          R  H       WWWW W         W W             W WW WW",
+=======
+"WWWWWWWW                   W         WMWWWWWW              W",
+"WWWWWWWW WWWWWWWWHWWWWWWWW W         W WWWWWWHWWWWWWWW   WWW",
+"WWWWWWWW W               W W         W W                   W",
+"WWWWWWWW W               W W         W W                   W",
+"WWWWWWWW W     R         W W         W W          R        W",
+"WWWWWWWW W               W W         W W                   W",
+"S        W               W W         W W                   W",
+"WWWWW   WW               W W         W W                   W",
+"W                        W W         W W                   W",
+"W           R            W W                               W",
+"W                        W W                               W",
+"W                        H H         W W        R          W",
+"W    R                               W WWWWWWWWWWWWWWWWWWWWW",
+"W                        H H         W                     W",
+"W                        W W         W WWWWWWHWWWWWWWWWWWWWW",
+"WWWWWWHWWWWWWWWWWWWWWWWWWW W         W W             WWWWWWW",
+"W             WWWWWWWWWWWW W         W W     J       W    WW",
+"W   R                 WWWW W         W W             W WW WW",
+>>>>>>> Stashed changes
 "W             WWWWWWW WWWW W         W WWWWWWWWWWWWWWW WW WW",
 "W             WWWWWWW WWWW W         W                 WW WW",
-"W      R      WWWWWWW WWWW W         WWWWWWWWWWWWWWWWWWWW WW",
+"W             WWWWWWW WWWW W         WWWWWWWWWWWWWWWWWWWW WW",
 "W             WWWWWW  WWWW W                            W WW",
+<<<<<<< Updated upstream
 "W        R    WWWWWW WWWWW W                            W WW",
 "W             WWWWWWHWWWWW W                            W WW",
 "W             W          W W                   R        W WW",
@@ -52,6 +74,24 @@ int main2()
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 
     struct posicao player = {15, 15};
+=======
+"W             WWWWWW WWWWW W              R             W WW",
+"W             WWWWWWWWWWWW W       R                    W WW",
+"W             W          W W                     R      W WW",
+"W             W          W WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW WW",
+"W             H          W                                WW",
+"W             W   R      WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
+
+    srand(time(NULL));
+
+    int q = 0;
+
+    // procura player e spawner e bota no mapa
+    struct posicao player = {15, 15};
+    struct posicao spawner = {10, 10};
+
+>>>>>>> Stashed changes
     for (l = 0; l < N_LINHAS; l++){
         for (c = 0; c < N_COLUNAS; c++){
             if (mapa[l][c] == 'J'){
@@ -60,13 +100,49 @@ int main2()
             }
         }
     }
+<<<<<<< Updated upstream
     struct posicao monstros[N_MAX_MONSTROS] = {{10, 10}, {16, 16}, {43, 18}};
+=======
 
+
+    // procura os recursos e bota no mapa
+
+    struct posicao recurso[MAX_RECURSOS] = {{10, 10, 1}, {20, 30, 1}};
+        for (l = 0; l < N_LINHAS; l++){
+            for (c = 0; c < N_COLUNAS; c++)
+                if (mapa[l][c] == 'R'){
+                    recurso[q].x = c;
+                    recurso[q].y = l;
+                    q++;
+                }
+            }
+
+
+    struct Inimigo monstros[N_MAX_MONSTROS] = {{3, 2, 1, 0}, {5, 2, 1, 0}, {7, 2, 1, 0}};
+    // Os monstros começam com uma posição fora da tela e uma textura aleatória
+    for (i = 0; i < N_MAX_MONSTROS; i++){
+        monstros[i].x = -1;
+        monstros[i].y = -1;
+        monstros[i].dirx = 0;
+        monstros[i].diry = 0;
+        monstros[i].idTextura = rand()%4;
+    }
+>>>>>>> Stashed changes
+
+    int podePegarRecursos = 1;
+    int playerRecursos = 0;
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
     int framesCounter = 0;
     int gameover = 1;
+<<<<<<< Updated upstream
     int numeroAleatorio;
+=======
+    float ultimo_tick = 0;
+    int tickCounter = 0;
+    int n_monstros_spawnados = 0;
+    int framesCounter1 = 0;
+>>>>>>> Stashed changes
 
     srand(time(NULL));
 
@@ -109,6 +185,7 @@ int main2()
         }
 
 
+<<<<<<< Updated upstream
         // Atualiza frame e desenha quadrado
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -117,6 +194,94 @@ int main2()
 
         int multiplo = 10;
 
+=======
+        // um tick (tudo dentro desse for) ocorre 16 vezes a cada segundo
+        if (GetTime() > ultimo_tick + 1/16.0){
+            ultimo_tick = GetTime();
+            tickCounter++;
+            // A cada X ticks: movimento dos inimigos
+            if(tickCounter % 8 == 0){
+                for (i=0; i<N_MAX_MONSTROS; i++){
+                    move_inimigo(&(monstros[i]), mapa);
+                }
+            }
+            if(tickCounter % 24 == 0 && n_monstros_spawnados < N_MAX_MONSTROS){
+                monstros[n_monstros_spawnados].x = spawner.x;
+                monstros[n_monstros_spawnados].y = spawner.y;
+                monstros[n_monstros_spawnados].dirx = 0;
+                monstros[n_monstros_spawnados].diry = 1;
+                n_monstros_spawnados++;
+            }
+        }
+
+
+
+
+        // Vê se player deve tomar dano
+        for (i = 0; i < N_MAX_MONSTROS; i++){
+            if ((monstros[i].x == player.x && monstros[i].y == player.y) && podeTomarDano == 1){
+                podeTomarDano = 0;
+                playerVidas--;
+            }
+        }
+        if (podeTomarDano == 0){
+            framesCounter++;
+            if (framesCounter == 60){
+                podeTomarDano = 1;
+                framesCounter = 0;
+            }
+        }
+
+
+
+        // Pega recursos
+
+        for (i = 0; i < MAX_RECURSOS; i++){
+            if ((recurso[i].x == player.x && recurso[i].y == player.y) && podePegarRecursos == 1){
+                playerRecursos++;
+                podePegarRecursos = 0;
+            }
+        }
+
+        if (podePegarRecursos == 0){
+            framesCounter1++;
+            if (framesCounter1 == 60){
+                podePegarRecursos = 1;
+                framesCounter1 = 0;
+            }
+        }
+
+
+
+
+        // Atualiza frame e desenha
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        desenha_mapa(mapa, caminho, tijolo, base, portal);
+        DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
+
+
+        // desenha monstros
+        for (i = 0; i < N_MAX_MONSTROS; i++)
+            DrawTexture(texturas[monstros[i].idTextura], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
+
+        // desenha recursos
+        for (i = 0; i < MAX_RECURSOS; i++){
+            DrawTexture(obstaculo, recurso[i].x * TAM_GRID, recurso[i].y * TAM_GRID, WHITE);
+            if (recurso[i].x == player.x && recurso[i].y == player.y)
+            {
+                pega_recurso(&(recurso[i]));
+            }
+
+        }
+
+        int multiplo = 10;
+
+        DrawText("Vidas: ", 10, 10, 50, RED);
+        DrawText("recursos: ", 10, 50, 50, RED);
+        DrawText(TextFormat("%i", playerRecursos), 270, 50, 50, RED);
+
+>>>>>>> Stashed changes
         for (b=0; b<playerVidas; b++)
         {
             multiplo = b * 40;
