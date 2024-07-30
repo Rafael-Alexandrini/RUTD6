@@ -8,7 +8,7 @@ void funcao_exemplo(){
 }
 
 
-void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D obstaculo, Texture2D base, Texture2D portal){
+void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal){
     int l, c;
     for (l = 0; l < N_LINHAS; l++){
         for (c = 0; c < N_COLUNAS; c++){
@@ -18,9 +18,6 @@ void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D ob
                     break;
                 case 'H':
                     DrawTexture(portal, c * TAM_GRID, l * TAM_GRID, WHITE);
-                    break;
-                case 'R':
-                    DrawTexture(obstaculo, c * TAM_GRID, l * TAM_GRID, WHITE);
                     break;
                 case 'S':
                     DrawTexture(base, c * TAM_GRID, l * TAM_GRID, WHITE);
@@ -176,4 +173,12 @@ int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61]){
         }
     }
     return podeMover;
+}
+
+void pega_recurso (struct posicao *recurso)
+{
+
+    recurso->x = -20;
+    recurso->y = -20;
+
 }

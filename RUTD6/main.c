@@ -42,10 +42,12 @@ int main()
 "W             W          W W                   R        W WW",
 "W   R         W          W WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW WW",
 "W             H          W                                WW",
-"W             W   R      WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+"W             W          WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"};
 
     srand(time(NULL));
+
+    int q = 0;
 
     struct posicao player = {15, 15};
     struct posicao spawner = {10, 10};
@@ -62,6 +64,17 @@ int main()
         }
     }
 
+    struct posicao recurso[MAX_RECURSOS] = {{10, 10, 1}, {20, 30, 1}};
+    for (l = 0; l < N_LINHAS; l++){
+            for (c = 0; c < N_COLUNAS; c++)
+                if (mapa[l][c] == 'R'){
+                    recurso[q].x = c;
+                    recurso[q].y = l;
+                    q++;}
+            }
+
+
+
     struct Inimigo monstros[N_MAX_MONSTROS] = {{3, 2, 1, 0}, {5, 2, 1, 0}, {7, 2, 1, 0}};
     // Os monstros começam com uma posição fora da tela e uma textura aleatória
     for (i = 0; i < N_MAX_MONSTROS; i++){
@@ -72,9 +85,12 @@ int main()
         monstros[i].idTextura = rand()%4;
     }
 
+    int playerRecursos;
+    int podePegarRecursos = 1;
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
     int framesCounter = 0;
+    int framesCounter1 = 0;
     int gameover = 1;
     float ultimo_tick = 0;
     int tickCounter = 0;
@@ -149,13 +165,38 @@ int main()
         }
 
 
+        for (i = 0; i < MAX_RECURSOS; i++){
+            if ((recurso[i].x == player.x && recurso[i].y == player.y) && podePegarRecursos == 1){
+                playerRecursos++;
+                podePegarRecursos = 0;
+            }
+        }
+        if (podePegarRecursos == 0){
+            framesCounter1++;
+            if (framesCounter1 == 10){
+                podePegarRecursos = 1;
+                framesCounter1 = 0;
+            }
+        }
+
+
 
 
         // Atualiza frame e desenha
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        desenha_mapa(mapa, caminho, tijolo, obstaculo, base, portal);
+        desenha_mapa(mapa, caminho, tijolo, base, portal);
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
+
+        for (i = 0; i < MAX_RECURSOS; i++){
+            DrawTexture(obstaculo, recurso[i].x * TAM_GRID, recurso[i].y * TAM_GRID, WHITE);
+            if (recurso[i].x == player.x && recurso[i].y == player.y)
+            {
+                pega_recurso(&(recurso[i]));
+            }
+        }
+
+
 
         for (i = 0; i < N_MAX_MONSTROS; i++)
             DrawTexture(texturas[monstros[i].idTextura], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
@@ -163,6 +204,10 @@ int main()
         int multiplo = 10;
 
         DrawText("Vidas: ", 10, 10, 50, RED);
+        DrawText("recursos: ", 10, 50, 50, RED);
+        DrawText(TextFormat("%i", playerRecursos), 270, 50, 50, RED);
+        DrawText(TextFormat("%i", podePegarRecursos), 270, 90, 50, RED);
+        DrawText(TextFormat("%i", framesCounter1), 270, 130, 50, RED);
 
         for (b=0; b<playerVidas; b++)
         {

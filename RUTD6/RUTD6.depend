@@ -84,21 +84,13 @@
 	<stdio.h>
 	<stdio.h>
 
-1721733676 source:c:\users\administrator\documents\github\rutd6\rutd6\construtor-mapa.c
-	<stdio.h>
+1722304065 source:c:\users\administrator\documents\github\rutd6\rutd6\construtor-mapa.c
 	<stdio.h>
 
 1721735170 source:c:\users\administrator\documents\github\rutd6\rutd6\exemplo-draw-textures.c
 	"raylib.h"
-	"raylib.h"
 
-1721843198 source:c:\users\administrator\documents\github\rutd6\rutd6\main.c
-	"raylib.h"
-	"nossas_funcoes.h"
-	"estruturas.h"
-	"nossas_funcoes.c"
-	<time.h>
-	<stdlib.h>
+1722375145 source:c:\users\administrator\documents\github\rutd6\rutd6\main.c
 	"raylib.h"
 	"nossas_funcoes.h"
 	"estruturas.h"
@@ -106,18 +98,16 @@
 	<time.h>
 	<stdlib.h>
 
-1721843159 c:\users\administrator\documents\github\rutd6\rutd6\nossas_funcoes.h
+1722374578 c:\users\administrator\documents\github\rutd6\rutd6\nossas_funcoes.h
 	"raylib.h"
-	"raylib.h"
+	"estruturas.h"
 
-1721733676 c:\users\administrator\documents\github\rutd6\rutd6\estruturas.h
+1722372101 c:\users\administrator\documents\github\rutd6\rutd6\estruturas.h
 
-1721843374 c:\users\administrator\documents\github\rutd6\rutd6\nossas_funcoes.c
+1722374809 c:\users\administrator\documents\github\rutd6\rutd6\nossas_funcoes.c
 	"nossas_funcoes.h"
 	<stdio.h>
-	"raylib.h"
-	"nossas_funcoes.h"
-	<stdio.h>
+	<stdlib.h>
 	"raylib.h"
 
 1721735170 source:c:\users\administrator\desktop\rutd6\rutd6\exemplo-draw-textures.c
