@@ -54,6 +54,8 @@ int main()
     struct base base = {10, 10, 10};
     struct posicao player = {15, 15};
     struct posicao spawner = {10, 10};
+    struct posicao recurso[MAX_RECURSOS] = {{10, 10, 1}, {20, 30, 1}};
+
     for (l = 0; l < N_LINHAS; l++){
         for (c = 0; c < N_COLUNAS; c++){
             if (mapa[l][c] == 'J'){
@@ -68,18 +70,13 @@ int main()
                 base.x = c;
                 base.y = l;
             }
+            else if (mapa[l][c] == 'R'){
+                recurso[q].x = c;
+                recurso[q].y = l;
+                q++;
+            }
         }
     }
-
-    struct posicao recurso[MAX_RECURSOS] = {{10, 10, 1}, {20, 30, 1}};
-    for (l = 0; l < N_LINHAS; l++){
-            for (c = 0; c < N_COLUNAS; c++)
-                if (mapa[l][c] == 'R'){
-                    recurso[q].x = c;
-                    recurso[q].y = l;
-                    q++;}
-            }
-
 
     struct Inimigo monstros[N_MAX_MONSTROS] = {{3, 2, 1, 0}, {5, 2, 1, 0}, {7, 2, 1, 0}};
     // Os monstros começam com uma posição fora da tela e uma textura aleatória
@@ -105,6 +102,8 @@ int main()
 
     struct bomba bombas[MAX_RECURSOS] = {{-1, -1, 1}, {-1, -1, 1}};
 
+
+    // incializa as bombas fora da tela
     for (i = 0; i < MAX_RECURSOS; i++)
     {
         bombas[i].x = -1;
@@ -194,6 +193,7 @@ int main()
             }
         }
 
+        // base toma dano
         for (i = 0; i < N_MAX_MONSTROS; i++){
             base_toma_dano(&(monstros[i]), &(base));
         }
@@ -207,6 +207,7 @@ int main()
 
         }
 
+        // mata monstro se posição for igual
         for (a = 0; a < N_MAX_MONSTROS; a++){
             for (i = 0; i < MAX_RECURSOS; i++){
                 if (monstros[a].x == bombas[i].x && monstros[a].y == bombas[i].y){
@@ -222,6 +223,8 @@ int main()
         desenha_mapa(mapa, caminho, tijolo, baseF, portal);
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
 
+
+        // pega recurso
         for (i = 0; i < MAX_RECURSOS; i++){
             DrawTexture(obstaculo, recurso[i].x * TAM_GRID, recurso[i].y * TAM_GRID, WHITE);
             if (recurso[i].x == player.x && recurso[i].y == player.y)
