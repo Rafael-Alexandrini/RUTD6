@@ -48,7 +48,10 @@ int main()
     srand(time(NULL));
 
     int q = 0;
+    int t = 0;
+    int a = 0;
 
+    struct base base = {10, 10, 10};
     struct posicao player = {15, 15};
     struct posicao spawner = {10, 10};
     for (l = 0; l < N_LINHAS; l++){
@@ -60,6 +63,10 @@ int main()
             else if (mapa[l][c] == 'M'){
                 spawner.x = c;
                 spawner.y = l;
+            }
+            else if (mapa[l][c] == 'S'){
+                base.x = c;
+                base.y = l;
             }
         }
     }
@@ -74,7 +81,6 @@ int main()
             }
 
 
-
     struct Inimigo monstros[N_MAX_MONSTROS] = {{3, 2, 1, 0}, {5, 2, 1, 0}, {7, 2, 1, 0}};
     // Os monstros começam com uma posição fora da tela e uma textura aleatória
     for (i = 0; i < N_MAX_MONSTROS; i++){
@@ -85,7 +91,8 @@ int main()
         monstros[i].idTextura = rand()%4;
     }
 
-    int playerRecursos;
+
+    int playerRecursos = 0;
     int podePegarRecursos = 1;
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
@@ -96,14 +103,22 @@ int main()
     int tickCounter = 0;
     int n_monstros_spawnados = 0;
 
+    struct bomba bombas[MAX_RECURSOS] = {{-1, -1, 1}, {-1, -1, 1}};
 
+    for (i = 0; i < MAX_RECURSOS; i++)
+    {
+        bombas[i].x = -1;
+        bombas[i].y = -1;
+    }
+
+    base.vidas = 3;
 
     InitWindow(LARGURA, ALTURA, "RUTD6");
     SetTargetFPS(60);
 
     Texture2D tijolo = LoadTexture("texturas/tijolo.png");
     Texture2D texturas[4] = {LoadTexture("texturas/estudante 1.png"), LoadTexture("texturas/estudante 2.png"), LoadTexture("texturas/estudante 3.png"), LoadTexture("texturas/estudante 4.png")};
-    Texture2D base = LoadTexture("texturas/ru.png");
+    Texture2D baseF = LoadTexture("texturas/ru.png");
     Texture2D vidas = LoadTexture("texturas/coração.png");
     Texture2D obstaculo =  LoadTexture("texturas/prova calc.png");
     Texture2D portal =  LoadTexture("texturas/portal.png");
@@ -130,7 +145,7 @@ int main()
 
 
         // um tick (tudo dentro desse for) ocorre 16 vezes a cada segundo
-        if (GetTime() > ultimo_tick + 1/16.0){
+        if ((GetTime() > ultimo_tick + 1/16.0) && gameover == 1){
             ultimo_tick = GetTime();
             tickCounter++;
             // A cada X ticks: movimento dos inimigos
@@ -149,7 +164,7 @@ int main()
         }
 
 
-        // Vê se player deve tomar dano
+        // Vê se player deve tomar dano e tempo de invincibilidade
         for (i = 0; i < N_MAX_MONSTROS; i++){
             if ((monstros[i].x == player.x && monstros[i].y == player.y) && podeTomarDano == 1){
                 podeTomarDano = 0;
@@ -164,7 +179,7 @@ int main()
             }
         }
 
-
+        // vê se player pegou recurso e tempo mínimo pra pegar mais um recurso
         for (i = 0; i < MAX_RECURSOS; i++){
             if ((recurso[i].x == player.x && recurso[i].y == player.y) && podePegarRecursos == 1){
                 playerRecursos++;
@@ -179,13 +194,32 @@ int main()
             }
         }
 
+        for (i = 0; i < N_MAX_MONSTROS; i++){
+            base_toma_dano(&(monstros[i]), &(base));
+        }
 
+
+        if (IsKeyPressed(KEY_G) && playerRecursos > 0){
+            bombas[t].x = player.x;
+            bombas[t].y = player.y;
+            t++;
+            playerRecursos--;
+
+        }
+
+        for (a = 0; a < N_MAX_MONSTROS; a++){
+            for (i = 0; i < MAX_RECURSOS; i++){
+                if (monstros[a].x == bombas[i].x && monstros[a].y == bombas[i].y){
+                mata_monstro(&(monstros[a]), &(bombas[i]));}
+
+            }
+        }
 
 
         // Atualiza frame e desenha
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        desenha_mapa(mapa, caminho, tijolo, base, portal);
+        desenha_mapa(mapa, caminho, tijolo, baseF, portal);
         DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
 
         for (i = 0; i < MAX_RECURSOS; i++){
@@ -198,8 +232,13 @@ int main()
 
 
 
+
+        //desenha monstros
         for (i = 0; i < N_MAX_MONSTROS; i++)
             DrawTexture(texturas[monstros[i].idTextura], monstros[i].x * TAM_GRID, monstros[i].y * TAM_GRID, WHITE);
+
+        for (i = 0; i < MAX_RECURSOS; i++)
+            DrawTexture(obstaculo, bombas[i].x * TAM_GRID, bombas[i].y * TAM_GRID, WHITE);
 
         int multiplo = 10;
 
@@ -208,6 +247,8 @@ int main()
         DrawText(TextFormat("%i", playerRecursos), 270, 50, 50, RED);
         DrawText(TextFormat("%i", podePegarRecursos), 270, 90, 50, RED);
         DrawText(TextFormat("%i", framesCounter1), 270, 130, 50, RED);
+        DrawText("vidas base: ", 10, 170, 50, RED);
+        DrawText(TextFormat("%i", base.vidas), 320, 170, 50, RED);
 
         for (b=0; b<playerVidas; b++)
         {
@@ -216,7 +257,8 @@ int main()
         }
 
 
-        if (playerVidas <= 0 )
+        // gameover
+        if (playerVidas <= 0 || base.vidas == 0)
         {
             playerVidas = 0;
             DrawRectangle(0, 0, LARGURA, ALTURA, cinzamorto);

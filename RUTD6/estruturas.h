@@ -14,5 +14,15 @@ struct Inimigo
     int idTextura;
 };
 
+struct bomba
+{
+    int x, y;
+    int ativo;
+};
 
+struct base
+{
+    int x, y;
+    int vidas;
+};
 #endif // ESTRUTURAS_H_
