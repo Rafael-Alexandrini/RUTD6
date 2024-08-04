@@ -12,6 +12,7 @@ struct Inimigo
     int x, y;
     int dirx, diry;
     int idTextura;
+    int vivo;
 };
 
 struct bomba

@@ -196,7 +196,7 @@ void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba)
 {
         inimigo->x = -20;
         inimigo->y = -20;
-        bomba->x = -20;
-        bomba->y = -20;
+        bomba->x = -10;
+        bomba->y = -10;
+        inimigo->vivo = 0;
 }
-

@@ -27,3 +27,4 @@ void nova_direcao(int *dirX, int *dirY, int boolDirecao);
 int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61]);
 
 #endif // NOSSAS_FUNCOES_H_
+
