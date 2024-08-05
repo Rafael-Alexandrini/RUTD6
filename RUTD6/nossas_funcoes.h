@@ -11,6 +11,7 @@
 #define N_MAX_MONSTROS 10
 #define PLAYER_VIDAS 10
 #define MAX_RECURSOS 10
+#define MAX_FONTES 5
 
 void funcao_exemplo();
 
