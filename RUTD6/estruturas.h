@@ -12,7 +12,18 @@ struct Inimigo
     int x, y;
     int dirx, diry;
     int idTextura;
+    int vivo;
 };
 
+struct bomba
+{
+    int x, y;
+    int ativo;
+};
 
+struct base
+{
+    int x, y;
+    int vidas;
+};
 #endif // ESTRUTURAS_H_

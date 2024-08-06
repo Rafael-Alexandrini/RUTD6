@@ -164,7 +164,6 @@ int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61]){
     else{
         switch (mapa[pY + dirY][pX + dirX]){
             case 'H':
-            case 'S':
             case 'W':
                 podeMover = 0;
                 break;
@@ -181,4 +180,23 @@ void pega_recurso (struct posicao *recurso)
     recurso->x = -20;
     recurso->y = -20;
 
+}
+
+void base_toma_dano (struct Inimigo *inimigo, struct base *base)
+{
+    if (inimigo->x == base->x && inimigo->y == base->y){
+
+        inimigo->x = -20;
+        inimigo->y = -20;
+        base->vidas--;
+    }
+}
+
+void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba)
+{
+        inimigo->x = -20;
+        inimigo->y = -20;
+        bomba->x = -10;
+        bomba->y = -10;
+        inimigo->vivo = 0;
 }
