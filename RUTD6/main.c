@@ -4,6 +4,7 @@
 #include "nossas_funcoes.c"
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 
@@ -68,7 +69,7 @@ int main()
     struct base base = {10, 10, 10};
     struct posicao player = {15, 15};
     struct posicao spawner = {10, 10};
-    struct posicao recurso[MAX_RECURSOS] = {{10, 10, 1}, {20, 30, 1}};
+    struct posicao recurso[MAX_RECURSOS] = {{10, 10}, {20, 30}};
     struct Inimigo monstros[N_MAX_MONSTROS] = {{3, 2, 1, 0}, {5, 2, 1, 0}, {7, 2, 1, 0}};
     struct bomba bombas[MAX_RECURSOS] = {{-1, -1, 1}, {-1, -1, 1}};
 
@@ -78,7 +79,7 @@ int main()
     int t = 0;
     int a = 0;
     int w = 0;
-    int playerRecursos = 0;
+    int playerRecursos = 1000;
     int podePegarRecursos = 1;
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
@@ -91,6 +92,7 @@ int main()
     int n_monstros_spawnados = 0;
     int monstros_vivos = 0;
     int vitoria = 0;
+    int nMapa = 1;
 
 
 
@@ -116,6 +118,28 @@ int main()
         bombas[i].x = -5;
         bombas[i].y = -5;
     }
+
+    // TEMPORÁRIO: PEDE QUAL ARQUIVO ABRIR
+    /*
+    char stringTemp[30] = {"mapas/"};
+    char nomeArquivoText[30] = {};
+    FILE *arquivoText;
+    printf("Digite o nome do arquivo: \n");
+    scanf("%s", nomeArquivoText);
+    strcat(stringTemp, nomeArquivoText);
+    arquivoText = fopen(stringTemp, "r");
+    if (arquivoText == NULL)
+        printf("Erro na abertura do arquivo\n");
+    else{
+        for (i = 0; i < N_LINHAS; i++){
+            fgets(mapa[i], N_COLUNAS + 2, arquivoText);
+            mapa[i][60] = '\0';
+        }
+        fclose(arquivoText);
+    }*/
+
+
+
 
 
 
@@ -149,6 +173,8 @@ int main()
 
             if (IsKeyDown(KEY_N))
             {// novo jogo sem nada salvo
+            nMapa = 5;
+            carrega_mapa(mapa, nMapa);
             acha_no_mapa(mapa, &player, &spawner, &base, recurso, i);
             zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
             telaAtual = GAMEPLAY;
@@ -279,23 +305,25 @@ int main()
                 }
             }
 
-            if (playerVidas <= 0 || base.vidas == 0)
-            {
+            if (playerVidas <= 0 || base.vidas == 0){
                 playerVidas = 0;
                 gameover = 1;
-                if (IsKeyPressed(KEY_ENTER))
-                {
+                if (IsKeyPressed(KEY_ENTER)){
                     telaAtual = TITLE; // vai pro início se perder
                 }
             }
 
 
-            if (monstros_vivos == 0 && n_monstros_spawnados == 10)
-            {
+            if (monstros_vivos == 0 && n_monstros_spawnados == N_MAX_MONSTROS){
                 vitoria = 1;
-                if (IsKeyPressed(KEY_ENTER))
-                {
-                    telaAtual = TITLE; // aqui deve ser passar de fase, mas a gente vê depois
+                if (IsKeyPressed(KEY_ENTER)){
+                    nMapa++;
+                    if (nMapa <= MAX_MAPAS){
+                        carrega_mapa(mapa, nMapa);
+                        acha_no_mapa(mapa, &player, &spawner, &base, recurso, i);
+                        zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
+                    }else
+                        telaAtual = TITLE; // deve ir para tela de vitória
                 }
             }
 

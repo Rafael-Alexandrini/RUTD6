@@ -247,3 +247,23 @@ void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstr
     *monstros_vivos = 0;
     *n_monstros_spawnados = 0;
 }
+
+int carrega_mapa(char mapa[31][61], int nMapa){
+    int conseguiuAbrir = 1;
+    char nomeArquivoText[30];
+    sprintf(nomeArquivoText, "mapas/mapa%02d.txt", nMapa);
+    FILE *arquivoText;
+    arquivoText = fopen(nomeArquivoText, "r");
+
+    if (arquivoText == NULL)
+        conseguiuAbrir = 0;  // Erro na abertura do arquivo
+    else{
+        for (int i = 0; i < N_LINHAS; i++){
+            fgets(mapa[i], N_COLUNAS + 2, arquivoText);
+            mapa[i][60] = '\0';
+        }
+        fclose(arquivoText);
+    }
+
+    return conseguiuAbrir;
+}
