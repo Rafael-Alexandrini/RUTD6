@@ -200,3 +200,50 @@ void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba)
         bomba->y = -10;
         inimigo->vivo = 0;
 }
+
+
+
+
+void acha_no_mapa (char mapa[N_LINHAS + 1][N_COLUNAS + 1], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS], int i)
+{
+
+int l, c;
+i = 0;
+
+ for (l = 0; l < N_LINHAS; l++)
+    {
+        for (c = 0; c < N_COLUNAS; c++)
+        {
+            if (mapa[l][c] == 'J')
+            {
+                player->x = c; // pega a posição inicial do jogador no mapa
+                player->y = l;
+            }
+            else if (mapa[l][c] == 'M')
+            {
+                spawner->x = c; // pega a posição inicial do spawner de monstros no mapa
+                spawner->y = l;
+            }
+            else if (mapa[l][c] == 'S')
+            {
+                base->x = c; // pega a posição da base no mapa
+                base->y = l;
+            }
+            else if (mapa[l][c] == 'R')
+            {
+                recurso[i].x = c; // pega a posição do q ésimo recurso
+                recurso[i].y = l;
+                i++;
+            }
+        }
+    }
+
+}
+
+void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstros_spawnados)
+{
+    *vitoria = 0;
+    *gameover = 0;
+    *monstros_vivos = 0;
+    *n_monstros_spawnados = 0;
+}

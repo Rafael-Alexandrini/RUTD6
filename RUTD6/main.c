@@ -85,7 +85,7 @@ int main()
     int framesCounter = 0;
     int framesCounter1 = 0;
     int framesCounter2 = 0;
-    int gameover = 1;
+    int gameover = 0;
     float ultimo_tick = 0;
     int tickCounter = 0;
     int n_monstros_spawnados = 0;
@@ -95,7 +95,6 @@ int main()
 
 
     base.vidas = 3;
-
 
 
     // Os monstros começam com uma posição fora da tela e uma textura aleatória
@@ -109,33 +108,7 @@ int main()
         monstros[i].vivo = 1;
     }
 
-    for (l = 0; l < N_LINHAS; l++)
-    {
-        for (c = 0; c < N_COLUNAS; c++)
-        {
-            if (mapa[l][c] == 'J')
-            {
-                player.x = c; // pega a posição inicial do jogador no mapa
-                player.y = l;
-            }
-            else if (mapa[l][c] == 'M')
-            {
-                spawner.x = c; // pega a posição inicial do spawner de monstros no mapa
-                spawner.y = l;
-            }
-            else if (mapa[l][c] == 'S')
-            {
-                base.x = c; // pega a posição da base no mapa
-                base.y = l;
-            }
-            else if (mapa[l][c] == 'R')
-            {
-                recurso[q].x = c; // pega a posição do q ésimo recurso
-                recurso[q].y = l;
-                q++;
-            }
-        }
-    }
+
 
     // incializa as bombas fora da tela em uma posição diferente dos monstros
     for (i = 0; i < MAX_RECURSOS; i++)
@@ -171,9 +144,15 @@ int main()
         {
             // fazer tela principal
 
-            if (IsKeyDown(KEY_Q)); // sair do jogo
+            if (IsKeyDown(KEY_Q)) // sair do jogo
+                CloseWindow();
 
-            if (IsKeyDown(KEY_N));// novo jogo sem nada salvo
+            if (IsKeyDown(KEY_N))
+            {// novo jogo sem nada salvo
+            acha_no_mapa(mapa, &player, &spawner, &base, recurso, i);
+            zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
+            telaAtual = GAMEPLAY;
+        }
 
             if (IsKeyDown(KEY_C)) // carrega jogo anterior
             {
@@ -188,7 +167,7 @@ int main()
 
 
             // Movimento do Jogador  // Remover coisa do shift antes de lançar
-            if (gameover == 1)
+            if (gameover == 0)
             {
                 if (IsKeyDown(KEY_LEFT_SHIFT))
                 {
@@ -208,7 +187,7 @@ int main()
 
 
             // um tick (tudo dentro desse for) ocorre 16 vezes a cada segundo
-            if ((GetTime() > ultimo_tick + 1/16.0) && gameover == 1)
+            if ((GetTime() > ultimo_tick + 1/16.0) && gameover == 0)
             {
                 ultimo_tick = GetTime();
                 tickCounter++;
@@ -303,19 +282,18 @@ int main()
             if (playerVidas <= 0 || base.vidas == 0)
             {
                 playerVidas = 0;
-                gameover = 0;
-                framesCounter2++;
-                if (framesCounter2 > 240)
+                gameover = 1;
+                if (IsKeyPressed(KEY_ENTER))
                 {
                     telaAtual = TITLE; // vai pro início se perder
                 }
             }
 
+
             if (monstros_vivos == 0 && n_monstros_spawnados == 10)
             {
                 vitoria = 1;
-                framesCounter2++;
-                if (framesCounter2 > 240)
+                if (IsKeyPressed(KEY_ENTER))
                 {
                     telaAtual = TITLE; // aqui deve ser passar de fase, mas a gente vê depois
                 }
@@ -347,6 +325,10 @@ int main()
             DrawText("Q = Sair do Jogo", 50, (ALTURA/2 + 50), 50, RED);
             DrawText("C = Carregar Jogo", 50, (ALTURA/2 + 100), 50, RED);
             DrawText("N = Novo Jogo", 50, (ALTURA/2 + 150), 50, RED);
+            DrawText("vitoria: ", 10, 170, 50, RED);
+            DrawText(TextFormat("%i", vitoria), 320, 170, 50, RED);
+            DrawText("gameover: ", 10, 240, 50, RED);
+            DrawText(TextFormat("%i", gameover), 320, 240, 50, RED);
             break;
         }
 
@@ -395,7 +377,7 @@ int main()
                 DrawText("ok!", 360, 10, 50, RED);
 
             // gameover
-            if (gameover == 0)
+            if (gameover == 1)
             {
                 DrawRectangle(0, 0, LARGURA, ALTURA, cinzamorto);
                 DrawText("GAME OVER", 50, 230, 180, RED);

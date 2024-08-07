@@ -13,6 +13,7 @@
 #define MAX_RECURSOS 10
 #define MAX_FONTES 5
 
+
 void funcao_exemplo();
 
 void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal);
