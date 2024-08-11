@@ -70,7 +70,7 @@ int main()
     struct posicao player = {15, 15};
     struct posicao spawner = {10, 10};
     struct posicao recurso[MAX_RECURSOS] = {{10, 10}, {20, 30}};
-    struct Inimigo monstros[N_MAX_MONSTROS] = {{3, 2, 1, 0}, {5, 2, 1, 0}, {7, 2, 1, 0}};
+    struct Inimigo monstros[N_MAX_MONSTROS] = {};
     struct bomba bombas[MAX_RECURSOS] = {{-1, -1, 1}, {-1, -1, 1}};
 
 
@@ -112,34 +112,14 @@ int main()
 
 
 
-    // incializa as bombas fora da tela em uma posição diferente dos monstros
+    // incializa as bombas e os recursos fora da tela em uma posição diferente dos monstros
     for (i = 0; i < MAX_RECURSOS; i++)
     {
         bombas[i].x = -5;
         bombas[i].y = -5;
+        recurso[i].x = -6;
+        recurso[i].y = -6;
     }
-
-    // TEMPORÁRIO: PEDE QUAL ARQUIVO ABRIR
-    /*
-    char stringTemp[30] = {"mapas/"};
-    char nomeArquivoText[30] = {};
-    FILE *arquivoText;
-    printf("Digite o nome do arquivo: \n");
-    scanf("%s", nomeArquivoText);
-    strcat(stringTemp, nomeArquivoText);
-    arquivoText = fopen(stringTemp, "r");
-    if (arquivoText == NULL)
-        printf("Erro na abertura do arquivo\n");
-    else{
-        for (i = 0; i < N_LINHAS; i++){
-            fgets(mapa[i], N_COLUNAS + 2, arquivoText);
-            mapa[i][60] = '\0';
-        }
-        fclose(arquivoText);
-    }*/
-
-
-
 
 
 
@@ -173,9 +153,9 @@ int main()
 
             if (IsKeyDown(KEY_N))
             {// novo jogo sem nada salvo
-            nMapa = 5;
+            nMapa = PRIMEIRO_MAPA;
             carrega_mapa(mapa, nMapa);
-            acha_no_mapa(mapa, &player, &spawner, &base, recurso, i);
+            acha_no_mapa(mapa, &player, &spawner, &base, recurso);
             zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
             telaAtual = GAMEPLAY;
         }
@@ -320,7 +300,7 @@ int main()
                     nMapa++;
                     if (nMapa <= MAX_MAPAS){
                         carrega_mapa(mapa, nMapa);
-                        acha_no_mapa(mapa, &player, &spawner, &base, recurso, i);
+                        acha_no_mapa(mapa, &player, &spawner, &base, recurso);
                         zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
                     }else
                         telaAtual = TITLE; // deve ir para tela de vitória

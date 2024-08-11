@@ -3,11 +3,6 @@
 #include <stdlib.h>
 #include "raylib.h"
 
-void funcao_exemplo(){
-    printf("funcao de exemplo pra testar .h\n");
-}
-
-
 void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal){
     int l, c;
     for (l = 0; l < N_LINHAS; l++){
@@ -94,41 +89,32 @@ void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
 }
 
 void move_inimigo(struct Inimigo *pInimigo, char mapa[31][61]){
-    int dirXog = pInimigo->dirx;
+    int dirXog = pInimigo->dirx; // guarda temporariamente direções originais dos inimigos
     int dirYog = pInimigo->diry;
-    int randomDir = rand() % 2;
 
 
     // se não consegue mover na direção original, tenta ir pra uma ou outra. se não consegue, volta. se ainda não, para
-    if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa))
-    {
+    if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa)){   // anda reto
         pInimigo->x += pInimigo->dirx;
         pInimigo->y += pInimigo->diry;
     }
-    else
-    {
-        nova_direcao(&(pInimigo->dirx), &(pInimigo->diry), randomDir);
-        if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa))
-        {
+    else{
+        nova_direcao(&(pInimigo->dirx), &(pInimigo->diry));
+        if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa)){ // anda esquerda/direita
             pInimigo->x += pInimigo->dirx;
             pInimigo->y += pInimigo->diry;
         }
-        else
-        {
-            pInimigo->dirx = dirXog;
-            pInimigo->diry = dirYog;
-            nova_direcao(&(pInimigo->dirx), &(pInimigo->diry), 1 - randomDir);
-            if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa))
-            {
+        else{
+            pInimigo->dirx = - pInimigo->dirx;
+            pInimigo->diry = - pInimigo->diry;
+            if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa)){ // anda contrário, direita/esquerda
                 pInimigo->x += pInimigo->dirx;
                 pInimigo->y += pInimigo->diry;
             }
-            else
-            {
+            else{
                 pInimigo->dirx = -dirXog;
                 pInimigo->diry = -dirYog;
-                if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa))
-                {
+                if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa)){ // em último caso, anda pra trás
                     pInimigo->x += pInimigo->dirx;
                     pInimigo->y += pInimigo->diry;
                 }
@@ -137,18 +123,21 @@ void move_inimigo(struct Inimigo *pInimigo, char mapa[31][61]){
     }
 }
 
-void nova_direcao(int *dirX, int *dirY, int boolDirecao){
-    // 1 0 -> 0 1 ou 0 -1
-    // -1 0 -> 0 1 ou 0 -1
-    // 0 1 -> 1 0 ou -1 0
-    // 0 -1 -> 1 0 ou -1 0
-    // boolDirecao (0 ou 1) indica uma direcao fixa. deve ser aleatório em outra função
+void nova_direcao(int *dirX, int *dirY){
+    // dada ponteiros para uma direção, muda esta para 90 graus à direita ou esquerda, aleatóriamente
+    // Exemplos:
+    // 1 0 (direita) -> 0 1 ou 0 -1 (cima ou baixo)
+    // -1 0 (esquerda) -> 0 1 ou 0 -1 (cima ou baixo)
+    // 0 1 (baixo) -> 1 0 ou -1 0 (esquerda ou direita)
+    // 0 -1 (cima) -> 1 0 ou -1 0 (esquerda ou direita)
+    int randomDir = rand() % 2; // escolhe direita/esquerda aleatóriamente
+
     if (*dirY == 0){
         *dirX = 0;
-        *dirY = (boolDirecao * 2) - 1;
+        *dirY = (randomDir * 2) - 1;
     }
     else if (*dirX == 0){
-        *dirX = (boolDirecao * 2) - 1;
+        *dirX = (randomDir * 2) - 1;
         *dirY = 0;
     }
 }
@@ -204,13 +193,12 @@ void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba)
 
 
 
-void acha_no_mapa (char mapa[N_LINHAS + 1][N_COLUNAS + 1], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS], int i)
+void acha_no_mapa (char mapa[N_LINHAS + 1][N_COLUNAS + 1], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS])
 {
+    int l, c;
+    int i = 0;
 
-int l, c;
-i = 0;
-
- for (l = 0; l < N_LINHAS; l++)
+    for (l = 0; l < N_LINHAS; l++)
     {
         for (c = 0; c < N_COLUNAS; c++)
         {

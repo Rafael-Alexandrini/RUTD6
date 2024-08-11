@@ -13,9 +13,8 @@
 #define MAX_RECURSOS 100
 #define MAX_FONTES 5
 #define MAX_MAPAS 6
+#define PRIMEIRO_MAPA 1
 
-
-void funcao_exemplo();
 
 void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal);
 
@@ -25,9 +24,19 @@ void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]);
 
 void move_inimigo(struct Inimigo *pInimigo, char mapa[31][61]);
 
-void nova_direcao(int *dirX, int *dirY, int boolDirecao);
+void nova_direcao(int *dirX, int *dirY);
 
 int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61]);
+
+void pega_recurso (struct posicao *recurso);
+
+void base_toma_dano (struct Inimigo *inimigo, struct base *base);
+
+void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba);
+
+void acha_no_mapa (char mapa[N_LINHAS + 1][N_COLUNAS + 1], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS]);
+
+void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstros_spawnados);
 
 int carrega_mapa(char mapa[31][61], int nMapa);
 
