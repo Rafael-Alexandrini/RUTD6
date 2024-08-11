@@ -16,7 +16,7 @@ int main()
     int l, c, i, b;
 
 
-    char mapa[N_LINHAS + 1][N_COLUNAS + 1] =
+    char mapa[N_LINHAS][N_COLUNAS] =
     {
         "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
         "WWWWWWWW                   W         WMWWWWWW              W",

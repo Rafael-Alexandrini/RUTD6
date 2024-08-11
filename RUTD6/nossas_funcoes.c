@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "raylib.h"
 
-void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal){
+void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal){
     int l, c;
     for (l = 0; l < N_LINHAS; l++){
         for (c = 0; c < N_COLUNAS; c++){
@@ -30,7 +30,7 @@ void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D ba
     }
 }
 
-void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
+void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]){
     int podeMover = 1;
 
     if ((*pX + dirX) < 0 || (*pX + dirX) >= N_COLUNAS || (*pY + dirY) < 0 || (*pY + dirY) >= N_LINHAS){
@@ -56,7 +56,7 @@ void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
     }
 }
 
-void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
+void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]){
     int i;
     int indHole = 0;
 
@@ -88,7 +88,7 @@ void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]){
 
 }
 
-void move_inimigo(struct Inimigo *pInimigo, char mapa[31][61]){
+void move_inimigo(struct Inimigo *pInimigo, char mapa[N_LINHAS][N_COLUNAS]){
     int dirXog = pInimigo->dirx; // guarda temporariamente direções originais dos inimigos
     int dirYog = pInimigo->diry;
 
@@ -143,7 +143,7 @@ void nova_direcao(int *dirX, int *dirY){
 }
 
 
-int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61]){
+int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]){
     int podeMover = 1;
 
     // se está dentro do mapa
@@ -190,10 +190,7 @@ void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba)
         inimigo->vivo = 0;
 }
 
-
-
-
-void acha_no_mapa (char mapa[N_LINHAS + 1][N_COLUNAS + 1], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS])
+void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS])
 {
     int l, c;
     int i = 0;
@@ -236,7 +233,7 @@ void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstr
     *n_monstros_spawnados = 0;
 }
 
-int carrega_mapa(char mapa[31][61], int nMapa){
+int carrega_mapa(char mapa[N_LINHAS][N_COLUNAS], int nMapa){
     int conseguiuAbrir = 1;
     char nomeArquivoText[30];
     sprintf(nomeArquivoText, "mapas/mapa%02d.txt", nMapa);
@@ -246,9 +243,11 @@ int carrega_mapa(char mapa[31][61], int nMapa){
     if (arquivoText == NULL)
         conseguiuAbrir = 0;  // Erro na abertura do arquivo
     else{
-        for (int i = 0; i < N_LINHAS; i++){
-            fgets(mapa[i], N_COLUNAS + 2, arquivoText);
-            mapa[i][60] = '\0';
+        for (int l = 0; l < N_LINHAS; l++){
+            for (int c = 0; c < N_COLUNAS; c++){
+                mapa[l][c] = getc(arquivoText);
+            }
+            getc(arquivoText);
         }
         fclose(arquivoText);
     }

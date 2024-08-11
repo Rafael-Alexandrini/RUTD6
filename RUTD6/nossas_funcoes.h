@@ -16,17 +16,17 @@
 #define PRIMEIRO_MAPA 1
 
 
-void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal);
+void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal);
 
-void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]);
+void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]);
 
-void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]);
+void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]);
 
-void move_inimigo(struct Inimigo *pInimigo, char mapa[31][61]);
+void move_inimigo(struct Inimigo *pInimigo, char mapa[N_LINHAS][N_COLUNAS]);
 
 void nova_direcao(int *dirX, int *dirY);
 
-int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[31][61]);
+int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]);
 
 void pega_recurso (struct posicao *recurso);
 
@@ -34,11 +34,11 @@ void base_toma_dano (struct Inimigo *inimigo, struct base *base);
 
 void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba);
 
-void acha_no_mapa (char mapa[N_LINHAS + 1][N_COLUNAS + 1], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS]);
+void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS]);
 
 void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstros_spawnados);
 
-int carrega_mapa(char mapa[31][61], int nMapa);
+int carrega_mapa(char mapa[N_LINHAS][N_COLUNAS], int nMapa);
 
 #endif // NOSSAS_FUNCOES_H_
 
