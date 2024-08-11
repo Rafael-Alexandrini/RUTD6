@@ -40,5 +40,7 @@ void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstr
 
 int carrega_mapa(char mapa[N_LINHAS][N_COLUNAS], int nMapa);
 
+void reseta_posicoes(struct posicao recurso[MAX_RECURSOS], struct Inimigo monstros[N_MAX_MONSTROS], struct bomba bombas[MAX_RECURSOS]);
+
 #endif // NOSSAS_FUNCOES_H_
 

@@ -73,6 +73,8 @@ int main()
     struct Inimigo monstros[N_MAX_MONSTROS] = {};
     struct bomba bombas[MAX_RECURSOS] = {{-1, -1, 1}, {-1, -1, 1}};
 
+    reseta_posicoes(recurso, monstros, bombas);
+
 
     // inicialização de variáveis
     int q = 0;
@@ -93,34 +95,7 @@ int main()
     int monstros_vivos = 0;
     int vitoria = 0;
     int nMapa = 1;
-
-
-
     base.vidas = 3;
-
-
-    // Os monstros começam com uma posição fora da tela e uma textura aleatória
-    for (i = 0; i < N_MAX_MONSTROS; i++)
-    {
-        monstros[i].x = -1;
-        monstros[i].y = -1;
-        monstros[i].dirx = 0;
-        monstros[i].diry = 0;
-        monstros[i].idTextura = rand()%4;
-        monstros[i].vivo = 1;
-    }
-
-
-
-    // incializa as bombas e os recursos fora da tela em uma posição diferente dos monstros
-    for (i = 0; i < MAX_RECURSOS; i++)
-    {
-        bombas[i].x = -5;
-        bombas[i].y = -5;
-        recurso[i].x = -6;
-        recurso[i].y = -6;
-    }
-
 
 
     typedef enum Tela {TITLE, GAMEPLAY, ENDING} Tela;
@@ -262,12 +237,16 @@ int main()
             }
 
 
-            if (IsKeyPressed(KEY_G) && playerRecursos > 0)
+            if (IsKeyDown(KEY_G) && playerRecursos > 0)
             {
                 bombas[t].x = player.x;
                 bombas[t].y = player.y;
                 t++;
                 playerRecursos--;
+                // caso o jogador coloque mais de 100 bombas num mesmo nível. Nunca deve acontecer, ao não ser que comece com 100 bombas.
+                // se quiser fazer aquilo de destruir o jogo por dentro, é só tirar isso aqui
+                if (t >= MAX_RECURSOS)
+                    t = 0;
 
             }
 
@@ -300,6 +279,8 @@ int main()
                     nMapa++;
                     if (nMapa <= MAX_MAPAS){
                         carrega_mapa(mapa, nMapa);
+                        t = 0; // recomeça índice das bombas a serem colocadas
+                        reseta_posicoes(recurso, monstros, bombas);
                         acha_no_mapa(mapa, &player, &spawner, &base, recurso);
                         zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
                     }else

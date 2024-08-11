@@ -254,3 +254,28 @@ int carrega_mapa(char mapa[N_LINHAS][N_COLUNAS], int nMapa){
 
     return conseguiuAbrir;
 }
+
+void reseta_posicoes(struct posicao recurso[MAX_RECURSOS], struct Inimigo monstros[N_MAX_MONSTROS], struct bomba bombas[MAX_RECURSOS]){
+    int i;
+    // Os monstros começam com uma posição fora da tela e uma textura aleatória
+    for (i = 0; i < N_MAX_MONSTROS; i++)
+    {
+        monstros[i].x = -1;
+        monstros[i].y = -1;
+        monstros[i].dirx = 0;
+        monstros[i].diry = 0;
+        monstros[i].idTextura = rand()%4;
+        monstros[i].vivo = 1;
+    }
+
+
+
+    // incializa as bombas e os recursos fora da tela em uma posição diferente dos monstros
+    for (i = 0; i < MAX_RECURSOS; i++)
+    {
+        bombas[i].x = -5;
+        bombas[i].y = -5;
+        recurso[i].x = -6;
+        recurso[i].y = -6;
+    }
+}
