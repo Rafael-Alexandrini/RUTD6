@@ -9,3 +9,6 @@ Coisas que tem que fazer:
 - Menu de pause
 - Salvar e carregar
 - Tela de vitória
+- spawnar recursos aleatóriamente
+- atualizar os mapas (alguns tem mais de um spawner, outros não tem o 'J', etc.)
+- criar sprites pro jogador e spawner dos monstros (não faço ideia do que seriam. Um onibus??) (será que dá pra fazer o jogador ser um mini josé afonso correndo por aí? kkkkk)
