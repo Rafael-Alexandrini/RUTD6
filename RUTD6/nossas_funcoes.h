@@ -8,7 +8,7 @@
 #define N_COLUNAS 60
 #define N_LINHAS 30
 #define TAM_GRID 20
-#define N_MAX_MONSTROS 2
+#define N_MAX_MONSTROS 4
 #define PLAYER_VIDAS 1
 #define MAX_RECURSOS 100
 #define MAX_FONTES 5
@@ -34,7 +34,7 @@ void base_toma_dano (struct Inimigo *inimigo, struct base *base);
 
 void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba);
 
-void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS]);
+void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS], struct Inimigo monstros[N_MAX_MONSTROS], int *n_monstros_spawnados, int *monstros_vivos);
 
 void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstros_spawnados);
 

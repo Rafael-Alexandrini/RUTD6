@@ -17,9 +17,9 @@ void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo,
                 case 'S':
                     DrawTexture(base, c * TAM_GRID, l * TAM_GRID, WHITE);
                     break;
-                case 'M':
-                    DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, YELLOW);
-                    break;
+
+                case 'T':
+                    DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, BROWN);
                 default:
                     DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, fundo);
                     break;
@@ -154,6 +154,7 @@ int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[N_LINHAS][N
         switch (mapa[pY + dirY][pX + dirX]){
             case 'H':
             case 'W':
+            case 'T':
                 podeMover = 0;
                 break;
             default:
@@ -190,10 +191,12 @@ void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba)
         inimigo->vivo = 0;
 }
 
-void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS])
+void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS], struct Inimigo monstros[N_MAX_MONSTROS], int *n_monstros_spawnados, int *monstros_vivos)
 {
     int l, c;
     int i = 0;
+    int b = 0;
+    int j = 0;
 
     for (l = 0; l < N_LINHAS; l++)
     {
@@ -206,13 +209,24 @@ void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struc
             }
             else if (mapa[l][c] == 'M')
             {
-                spawner->x = c; // pega a posição inicial do spawner de monstros no mapa
-                spawner->y = l;
+                monstros[b].dirx = 0;
+                monstros[b].diry = 1;
+                monstros[b].x = c;
+                monstros[b].y = l;
+                b++;
+                *n_monstros_spawnados = b;
+                *monstros_vivos = b;
             }
             else if (mapa[l][c] == 'S')
             {
                 base->x = c; // pega a posição da base no mapa
                 base->y = l;
+            }
+            else if (mapa[l][c] == 'T')
+            {
+                spawner->x = c; // pega a posição inicial do spawner de monstros no mapa
+                spawner->y = l;
+                j++;
             }
             else if (mapa[l][c] == 'R')
             {
@@ -222,7 +236,6 @@ void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struc
             }
         }
     }
-
 }
 
 void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstros_spawnados)

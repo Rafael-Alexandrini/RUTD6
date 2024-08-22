@@ -125,8 +125,8 @@ int main()
                 nMapa = PRIMEIRO_MAPA;
                 carrega_mapa(mapa, nMapa);
                 reseta_posicoes(recurso, monstros, bombas);
-                acha_no_mapa(mapa, &player, &spawner, &base, recurso);
                 zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
+                acha_no_mapa(mapa, &player, &spawner, &base, recurso, monstros, &n_monstros_spawnados, &monstros_vivos);
                 pausado = 0;                             // talvez mudar isso (colocar no zera_estado???
                 playerRecursos = 0;                         // aqui também
                 playerVidas = PLAYER_VIDAS;                            // e mais isso
@@ -264,11 +264,12 @@ int main()
                     vitoria = 1;
                     if (IsKeyPressed(KEY_ENTER)){
                         nMapa++;
+                        playerVidas++;
                         if (nMapa <= MAX_MAPAS){
                             carrega_mapa(mapa, nMapa);
                             indBombas = 0;
                             reseta_posicoes(recurso, monstros, bombas);
-                            acha_no_mapa(mapa, &player, &spawner, &base, recurso);
+                            acha_no_mapa(mapa, &player, &spawner, &base, recurso, monstros, &n_monstros_spawnados, &monstros_vivos);
                             zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
                             base.vidas = 3;
                         }else{
