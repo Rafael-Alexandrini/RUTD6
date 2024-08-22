@@ -9,7 +9,7 @@
 #define N_LINHAS 30
 #define TAM_GRID 20
 #define N_MAX_MONSTROS 2
-#define PLAYER_VIDAS 10
+#define PLAYER_VIDAS 1
 #define MAX_RECURSOS 100
 #define MAX_FONTES 5
 #define MAX_MAPAS 6

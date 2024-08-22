@@ -2,13 +2,13 @@ Coisas que dá pra fazer pra ficar mais bonitinho:
 - reutilizar algumas estruturas (ex: bombas poderiam ser só posições, e a base e o player poderiam ser a mesma estrutura, com posição e vidas)
 - acho que é boas práticas, mas não me importo muito: trocar os x e y das estruturas por uma struct posição
 - ver se o inimigo precisa do atributo vivo (acho que tu falou e eu esqueci (👉ﾟヮﾟ)👉
-- renomear variável t das bombas
+- renomear variável t das bombas FEITO
+- spawnar recursos aleatóriamente
+- criar sprites pro jogador e spawner dos monstros (não faço ideia do que seriam. Um onibus??) (será que dá pra fazer o jogador ser um mini josé afonso correndo por aí? kkkkk)
 
 Coisas que tem que fazer:
-- passar de fase se matou x inimigos e outros y inimigos atacaram a base (por enquanto tá dando softlock)
-- Menu de pause
+- passar de fase se matou x inimigos e outros y inimigos atacaram a base (por enquanto tá dando softlock) FEITO
+- Menu de pause FEITO
 - Salvar e carregar
-- Tela de vitória
-- spawnar recursos aleatóriamente
+- Tela de vitória FEITO
 - atualizar os mapas (alguns tem mais de um spawner, outros não tem o 'J', etc.)
-- criar sprites pro jogador e spawner dos monstros (não faço ideia do que seriam. Um onibus??) (será que dá pra fazer o jogador ser um mini josé afonso correndo por aí? kkkkk)
