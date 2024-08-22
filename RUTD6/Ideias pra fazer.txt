@@ -8,6 +8,7 @@ Coisas que dá pra fazer pra ficar mais bonitinho:
 - Fazer funções de salvamento e carregamento retornarem int
 
 Coisas que tem que fazer:
+- Fazer número de monstros depender da fase
 - Sinalizar vidas da base
 - Fazer indicação para quando salvar e carregar ("Jogo salvo com sucesso!")
 - atualizar os mapas (alguns tem mais de um spawner, outros não tem o 'J', etc.)
