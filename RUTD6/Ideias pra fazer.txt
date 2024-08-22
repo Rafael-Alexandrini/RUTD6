@@ -12,3 +12,4 @@ Coisas que tem que fazer:
 - Salvar e carregar
 - Tela de vitória FEITO
 - atualizar os mapas (alguns tem mais de um spawner, outros não tem o 'J', etc.)
+- Fazer um jeito de mapas começarem com monstros já spawnados
