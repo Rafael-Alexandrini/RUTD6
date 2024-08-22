@@ -1,7 +1,5 @@
 #ifndef ESTRUTURAS_H_   /* Include guard */
 #define ESTRUTURAS_H_
-#define MAX_RECURSOS 100
-#define N_MAX_MONSTROS 4
 
 
 struct posicao

@@ -9,10 +9,12 @@ Coisas que dá pra fazer pra ficar mais bonitinho:
 
 Coisas que tem que fazer:
 - Sinalizar vidas da base
-- passar de fase se matou x inimigos e outros y inimigos atacaram a base (por enquanto tá dando softlock) FEITO
-- Menu de pause FEITO
-- Salvar e carregar
 - Fazer indicação para quando salvar e carregar ("Jogo salvo com sucesso!")
-- Tela de vitória FEITO
 - atualizar os mapas (alguns tem mais de um spawner, outros não tem o 'J', etc.)
+
+
+- Menu de pause FEITO
+- Salvar e carregar FEITO (acho)
+- passar de fase se matou x inimigos e outros y inimigos atacaram a base (por enquanto tá dando softlock) FEITO
+- Tela de vitória FEITO
 - Fazer um jeito de mapas começarem com monstros já spawnados

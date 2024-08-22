@@ -85,7 +85,7 @@ int main()
     int n_monstros_spawnados = 0;
     int monstros_vivos = 0;
     int vitoria = 0;
-    int nMapa = 1;
+    int nMapa = 0;
     int multiplo = 10;
     base.vidas = 3;
     int deveFechar = 0;
@@ -151,6 +151,7 @@ int main()
 
             if (IsKeyDown(KEY_C)) // carrega jogo anterior
             {
+                reseta_posicoes(recurso, monstros, bombas);
                 zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
                 pausado = 0;
                 carrega_save(salvamento);
@@ -303,6 +304,7 @@ int main()
                 if(IsKeyPressed(KEY_TAB)) pausado = !pausado;
                 if(IsKeyPressed(KEY_C)) pausado = !pausado;
                 if(IsKeyPressed(KEY_L)){//load jogo
+                    reseta_posicoes(recurso, monstros, bombas);
                     zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
                     pausado = 0;
                     carrega_save(salvamento);

@@ -305,7 +305,7 @@ void salva_jogo(struct Save save){
         fwrite(save.n_monstros_vivos, sizeof(int), 1, arquivoBin);
         fwrite(save.n_monstros_spawnados, sizeof(int), 1, arquivoBin);
         fwrite(save.recursos, sizeof(struct posicao), MAX_RECURSOS, arquivoBin);
-        fwrite(save.bombas, sizeof(struct posicao), MAX_RECURSOS, arquivoBin);
+        fwrite(save.bombas, sizeof(struct bomba), MAX_RECURSOS, arquivoBin);
         fwrite(save.indiceBombas, sizeof(int), 1, arquivoBin);
         fwrite(save.nMapa, sizeof(int), 1, arquivoBin);
         fwrite(save.tickCounter, sizeof(int), 1, arquivoBin);
@@ -327,7 +327,7 @@ void carrega_save(struct Save save){
         fread(save.n_monstros_vivos, sizeof(int), 1, arquivoBin);
         fread(save.n_monstros_spawnados, sizeof(int), 1, arquivoBin);
         fread(save.recursos, sizeof(struct posicao), MAX_RECURSOS, arquivoBin);
-        fread(save.bombas, sizeof(struct posicao), MAX_RECURSOS, arquivoBin);
+        fread(save.bombas, sizeof(struct bomba), MAX_RECURSOS, arquivoBin);
         fread(save.indiceBombas, sizeof(int), 1, arquivoBin);
         fread(save.nMapa, sizeof(int), 1, arquivoBin);
         fread(save.tickCounter, sizeof(int), 1, arquivoBin);
