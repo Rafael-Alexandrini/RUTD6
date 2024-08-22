@@ -292,3 +292,50 @@ void reseta_posicoes(struct posicao recurso[MAX_RECURSOS], struct Inimigo monstr
         recurso[i].y = -6;
     }
 }
+
+void salva_jogo(struct Save save){
+    FILE *arquivoBin = fopen(LOCAL_SAVE, "w");
+    if (arquivoBin != NULL){
+        fwrite(save.spawnwer, sizeof(struct posicao), 1, arquivoBin);
+        fwrite(save.jogador, sizeof(struct posicao), 1, arquivoBin);
+        fwrite(save.vidasJogador, sizeof(int), 1, arquivoBin);
+        fwrite(save.recursosJogardor, sizeof(int), 1, arquivoBin);
+        fwrite(save.base, sizeof(struct base), 1, arquivoBin);
+        fwrite(save.monstros, sizeof(struct Inimigo), N_MAX_MONSTROS, arquivoBin);
+        fwrite(save.n_monstros_vivos, sizeof(int), 1, arquivoBin);
+        fwrite(save.n_monstros_spawnados, sizeof(int), 1, arquivoBin);
+        fwrite(save.recursos, sizeof(struct posicao), MAX_RECURSOS, arquivoBin);
+        fwrite(save.bombas, sizeof(struct posicao), MAX_RECURSOS, arquivoBin);
+        fwrite(save.indiceBombas, sizeof(int), 1, arquivoBin);
+        fwrite(save.nMapa, sizeof(int), 1, arquivoBin);
+        fwrite(save.tickCounter, sizeof(int), 1, arquivoBin);
+
+        fclose(arquivoBin);
+    }else
+        printf("Erro no salvamento!\n");
+}
+
+void carrega_save(struct Save save){
+    FILE *arquivoBin = fopen(LOCAL_SAVE, "r");
+    if (arquivoBin != NULL){
+        fread(save.spawnwer, sizeof(struct posicao), 1, arquivoBin);
+        fread(save.jogador, sizeof(struct posicao), 1, arquivoBin);
+        fread(save.vidasJogador, sizeof(int), 1, arquivoBin);
+        fread(save.recursosJogardor, sizeof(int), 1, arquivoBin);
+        fread(save.base, sizeof(struct base), 1, arquivoBin);
+        fread(save.monstros, sizeof(struct Inimigo), N_MAX_MONSTROS, arquivoBin);
+        fread(save.n_monstros_vivos, sizeof(int), 1, arquivoBin);
+        fread(save.n_monstros_spawnados, sizeof(int), 1, arquivoBin);
+        fread(save.recursos, sizeof(struct posicao), MAX_RECURSOS, arquivoBin);
+        fread(save.bombas, sizeof(struct posicao), MAX_RECURSOS, arquivoBin);
+        fread(save.indiceBombas, sizeof(int), 1, arquivoBin);
+        fread(save.nMapa, sizeof(int), 1, arquivoBin);
+        fread(save.tickCounter, sizeof(int), 1, arquivoBin);
+
+        fclose(arquivoBin);
+    }else
+        printf("Erro no carregamento!\n");
+
+
+}
+

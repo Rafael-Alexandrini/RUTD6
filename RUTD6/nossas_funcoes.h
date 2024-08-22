@@ -14,6 +14,7 @@
 #define MAX_FONTES 5
 #define MAX_MAPAS 6
 #define PRIMEIRO_MAPA 1
+#define LOCAL_SAVE "./mapas/meusave.bin"
 
 
 void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal);
@@ -41,6 +42,10 @@ void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstr
 int carrega_mapa(char mapa[N_LINHAS][N_COLUNAS], int nMapa);
 
 void reseta_posicoes(struct posicao recurso[MAX_RECURSOS], struct Inimigo monstros[N_MAX_MONSTROS], struct bomba bombas[MAX_RECURSOS]);
+
+void salva_jogo(struct Save save);
+
+void carrega_save(struct Save save);
 
 #endif // NOSSAS_FUNCOES_H_
 

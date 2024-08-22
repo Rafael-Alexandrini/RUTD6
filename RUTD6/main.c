@@ -13,8 +13,6 @@ int main()
 {
     // ----------------------------------------- INICIALIZAÇÕES -----------------------------------------
 
-    int l, c, i, b;
-
     // Mapa default
     char mapa[N_LINHAS][N_COLUNAS] =
     {
@@ -68,11 +66,12 @@ int main()
 
 
     // inicialização de variáveis                   // a gente tem que ajeitar isso aqui eu acho
+    int l, c, i, b;
     int q = 0;
     int indBombas = 0;
     int a = 0;
     int w = 0;
-    int playerRecursos = 1000;
+    int playerRecursos = 0;
     int podePegarRecursos = 1;
     int playerVidas = PLAYER_VIDAS;
     int podeTomarDano = 1;
@@ -91,6 +90,22 @@ int main()
     base.vidas = 3;
     int deveFechar = 0;
     int finalizouMapas = 0;
+    // Atribui ponteiros à estrutura save
+    struct Save salvamento = {};
+    salvamento.spawnwer = &spawner;
+    salvamento.jogador = &player;
+    salvamento.vidasJogador = &playerVidas;
+    salvamento.recursosJogardor= &playerRecursos;
+    salvamento.base = &base;
+    salvamento.monstros = monstros;
+    salvamento.n_monstros_vivos = &monstros_vivos;
+    salvamento.n_monstros_spawnados= &n_monstros_spawnados;
+    salvamento.recursos = recurso;
+    salvamento.bombas = bombas;
+    salvamento.indiceBombas = &indBombas;
+    salvamento.nMapa = &nMapa;
+    salvamento.tickCounter = &tickCounter;
+
 
 
     typedef enum Tela {TITLE, GAMEPLAY, ENDING} Tela;
@@ -136,7 +151,11 @@ int main()
 
             if (IsKeyDown(KEY_C)) // carrega jogo anterior
             {
-                //telaAtual = GAMEPLAY;
+                zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
+                pausado = 0;
+                carrega_save(salvamento);
+                carrega_mapa(mapa, nMapa);
+                telaAtual = GAMEPLAY;
             }
             break;
         }
@@ -283,8 +302,13 @@ int main()
             else{
                 if(IsKeyPressed(KEY_TAB)) pausado = !pausado;
                 if(IsKeyPressed(KEY_C)) pausado = !pausado;
-                if(IsKeyPressed(KEY_L));//load jogo
-                if(IsKeyPressed(KEY_S));//salva jogo
+                if(IsKeyPressed(KEY_L)){//load jogo
+                    zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
+                    pausado = 0;
+                    carrega_save(salvamento);
+                    carrega_mapa(mapa, nMapa);
+                }
+                if(IsKeyPressed(KEY_S)) salva_jogo(salvamento);
                 if(IsKeyPressed(KEY_V)) telaAtual = TITLE;
                 if(IsKeyPressed(KEY_F)) deveFechar = 1;
             }
@@ -312,6 +336,8 @@ int main()
             DrawText("Q = Sair do Jogo", 50, (ALTURA/2 + 50), 50, RED);
             DrawText("C = Carregar Jogo", 50, (ALTURA/2 + 100), 50, RED);
             DrawText("N = Novo Jogo", 50, (ALTURA/2 + 150), 50, RED);
+            if (gameover == 1)
+                DrawText("Voce morreu.", 10, 170, 50, RED);
             if (finalizouMapas == 1)
                 DrawText("Parabens! Completou todos os mapas!", 10, 170, 50, RED);
             break;

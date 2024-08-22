@@ -29,16 +29,20 @@ struct base
     int vidas;
 };
 
-struct jogo
+struct Save
 {
-    struct base base;
-    struct posicao spawnwer;
-    struct posicao jogador;
-    struct posicao recursos[MAX_RECURSOS];
-    struct bomba bombas[MAX_RECURSOS];
-    struct Inimigo monstros[N_MAX_MONSTROS];
-
-
-
+    struct posicao *spawnwer;
+    struct posicao *jogador;
+    int *vidasJogador;
+    int *recursosJogardor;
+    struct base *base;
+    struct Inimigo *monstros; // array de monstros
+    int *n_monstros_vivos;
+    int *n_monstros_spawnados;
+    struct posicao *recursos; // array de recursos
+    struct bomba *bombas; // array de bombas
+    int *indiceBombas;
+    int *nMapa;
+    int *tickCounter;
 };
 #endif // ESTRUTURAS_H_

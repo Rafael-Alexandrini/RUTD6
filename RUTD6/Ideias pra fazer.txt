@@ -5,11 +5,14 @@ Coisas que dá pra fazer pra ficar mais bonitinho:
 - renomear variável t das bombas FEITO
 - spawnar recursos aleatóriamente
 - criar sprites pro jogador e spawner dos monstros (não faço ideia do que seriam. Um onibus??) (será que dá pra fazer o jogador ser um mini josé afonso correndo por aí? kkkkk)
+- Fazer funções de salvamento e carregamento retornarem int
 
 Coisas que tem que fazer:
+- Sinalizar vidas da base
 - passar de fase se matou x inimigos e outros y inimigos atacaram a base (por enquanto tá dando softlock) FEITO
 - Menu de pause FEITO
 - Salvar e carregar
+- Fazer indicação para quando salvar e carregar ("Jogo salvo com sucesso!")
 - Tela de vitória FEITO
 - atualizar os mapas (alguns tem mais de um spawner, outros não tem o 'J', etc.)
 - Fazer um jeito de mapas começarem com monstros já spawnados
