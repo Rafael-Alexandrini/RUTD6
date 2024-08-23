@@ -172,15 +172,6 @@ void pega_recurso (struct posicao *recurso)
 
 }
 
-void base_toma_dano (struct Inimigo *inimigo, struct base *base)
-{
-    if (inimigo->x == base->x && inimigo->y == base->y){
-
-        inimigo->x = -20;
-        inimigo->y = -20;
-        base->vidas--;
-    }
-}
 
 void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba)
 {

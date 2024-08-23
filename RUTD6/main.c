@@ -114,7 +114,7 @@ int main()
 
 
 
-    typedef enum Tela {TITLE, GAMEPLAY, ENDING} Tela;
+    typedef enum Tela {TITLE, GAMEPLAY} Tela;
 
     Tela telaAtual = TITLE;
 
@@ -168,7 +168,6 @@ int main()
             }
             break;
         }
-
         case GAMEPLAY:
         {
             if (!pausado)       //Lógica padrão do jogo, não pausado
@@ -385,8 +384,6 @@ int main()
             }
         }
         break;
-        case ENDING:
-            break;
         }
 
 
@@ -414,7 +411,6 @@ int main()
                 DrawText("Parabens! Completou todos os mapas!", 10, 170, 50, RED);
             break;
         }
-
         case GAMEPLAY:
         {
 
@@ -466,8 +462,6 @@ int main()
 
         }
         break;
-        case ENDING:
-            break;
         }
 
         EndDrawing();
