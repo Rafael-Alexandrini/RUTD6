@@ -5,6 +5,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 
 
@@ -90,6 +91,11 @@ int main()
     base.vidas = 3;
     int deveFechar = 0;
     int finalizouMapas = 0;
+    int quantletras = 0;
+    char cheats[MAXCARAC + 1] = "\0";
+    int contcarac = 0;
+    int key;
+    int rapidin = 0;
     // Atribui ponteiros à estrutura save
     struct Save salvamento = {};
     salvamento.spawnwer = &spawner;
@@ -124,6 +130,7 @@ int main()
     Texture2D obstaculo =  LoadTexture("texturas/prova calc.png");
     Texture2D portal =  LoadTexture("texturas/portal.png");
     Texture2D titleScreen = LoadTexture("texturas/th.png");
+    Texture2D cadeira = LoadTexture("texturas/cadeira.png");
 
     while(!WindowShouldClose() && !deveFechar)
     {
@@ -136,7 +143,8 @@ int main()
                 deveFechar = 1;
 
             if (IsKeyDown(KEY_N))
-            {// novo jogo sem nada salvo        // fazer uma função pra isso tudo, já q também é usado qnd passa de fase
+            {
+                // novo jogo sem nada salvo        // fazer uma função pra isso tudo, já q também é usado qnd passa de fase
                 nMapa = PRIMEIRO_MAPA;
                 carrega_mapa(mapa, nMapa);
                 reseta_posicoes(recurso, monstros, bombas);
@@ -163,15 +171,27 @@ int main()
 
         case GAMEPLAY:
         {
-            if (!pausado){      //Lógica padrão do jogo, não pausado
+            if (!pausado)       //Lógica padrão do jogo, não pausado
+            {
                 // Ações do Jogador
                 if (gameover == 0 && vitoria == 0)
                 {
-                    if (IsKeyPressed(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
-                    if (IsKeyPressed(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
-                    if (IsKeyPressed(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
-                    if (IsKeyPressed(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
-                    if (IsKeyPressed(KEY_G) && playerRecursos > 0){
+                    if (rapidin == 1 && IsKeyDown(KEY_LEFT_SHIFT))
+                    {
+                        if (IsKeyDown(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
+                        if (IsKeyDown(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
+                        if (IsKeyDown(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
+                        if (IsKeyDown(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
+                    }
+                    else
+                    {
+                        if (IsKeyPressed(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
+                        if (IsKeyPressed(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
+                        if (IsKeyPressed(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
+                        if (IsKeyPressed(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
+                    }
+                    if (IsKeyPressed(KEY_G) && playerRecursos > 0)
+                    {
                         bombas[indBombas].x = player.x;
                         bombas[indBombas].y = player.y;
                         indBombas++;
@@ -184,7 +204,7 @@ int main()
 
 
                 // CONTADOR DE TICKS (roda 16 vezes por segundo)
-                if ((GetTime() > ultimo_tick + 1/16.0) && gameover == 0)
+                if ((GetTime() > ultimo_tick + 1/(16.0 + nMapa * 3)) && gameover == 0)
                 {
                     ultimo_tick = GetTime();
                     tickCounter++;
@@ -196,7 +216,7 @@ int main()
                             move_inimigo(&(monstros[i]), mapa);
                         }
                     }
-                    if(tickCounter % 24 == 0 && n_monstros_spawnados < N_MAX_MONSTROS)
+                    if(tickCounter % 24 == 0 && n_monstros_spawnados < nMapa * 2)
                     {
                         monstros[n_monstros_spawnados].x = spawner.x;
                         monstros[n_monstros_spawnados].y = spawner.y;
@@ -207,6 +227,45 @@ int main()
                     }
                 }
 
+                key = tolower(GetCharPressed());
+
+                if (key > 0)
+                {
+                    if ((key >= 32) && (key<=125) && contcarac < MAXCARAC)
+                    {
+                        cheats[contcarac] = (char)key;
+                        cheats[contcarac+1] = '\0';
+                        contcarac++;
+                    }
+                }
+
+                if(IsKeyPressed(KEY_BACKSPACE))
+                {
+                    contcarac--;
+                    if (contcarac < 0) contcarac = 0;
+                    cheats[contcarac] = '\0';
+                }
+
+                if (strcmp(cheats, "amor venceu") == 0)
+                {
+                    playerVidas = playerVidas + 10;
+                    strcpy(cheats, "\0");
+                    contcarac = 0;
+                }
+
+                if (strcmp(cheats, "setembro") == 0)
+                {
+                    playerRecursos = playerRecursos + 10;
+                    strcpy(cheats, "\0");
+                    contcarac = 0;
+                }
+
+                if (strcmp(cheats, "velocidade") == 0)
+                {
+                    rapidin = 1;
+                    strcpy(cheats, "\0");
+                    contcarac = 0;
+                }
 
                 // Vê se player deve tomar dano e tempo de invincibilidade
                 for (i = 0; i < N_MAX_MONSTROS; i++)
@@ -251,7 +310,8 @@ int main()
                 // checa colisão dos monstro com bombas e base
                 for (a = 0; a < N_MAX_MONSTROS; a++)
                 {
-                    if (monstros[a].x == base.x && monstros[a].y == base.y){
+                    if (monstros[a].x == base.x && monstros[a].y == base.y)
+                    {
                         monstros[a].x = -20;
                         monstros[a].y = -20;
                         monstros[a].vivo = 0;
@@ -272,27 +332,34 @@ int main()
 
 
                 // Derrota
-                if (playerVidas <= 0 || base.vidas == 0){
+                if (playerVidas <= 0 || base.vidas == 0)
+                {
                     playerVidas = 0;
                     gameover = 1;
-                    if (IsKeyPressed(KEY_ENTER)){
+                    if (IsKeyPressed(KEY_ENTER))
+                    {
                         telaAtual = TITLE; // vai pro início se perder
                     }
                 }
                 // Vitória
-                if (monstros_vivos == 0 && n_monstros_spawnados == N_MAX_MONSTROS){
+                if (monstros_vivos == 0 && n_monstros_spawnados >= nMapa * 2)
+                {
                     vitoria = 1;
-                    if (IsKeyPressed(KEY_ENTER)){
+                    if (IsKeyPressed(KEY_ENTER))
+                    {
                         nMapa++;
                         playerVidas++;
-                        if (nMapa <= MAX_MAPAS){
+                        if (nMapa <= MAX_MAPAS)
+                        {
                             carrega_mapa(mapa, nMapa);
                             indBombas = 0;
                             reseta_posicoes(recurso, monstros, bombas);
-                            acha_no_mapa(mapa, &player, &spawner, &base, recurso, monstros, &n_monstros_spawnados, &monstros_vivos);
                             zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
+                            acha_no_mapa(mapa, &player, &spawner, &base, recurso, monstros, &n_monstros_spawnados, &monstros_vivos);
                             base.vidas = 3;
-                        }else{
+                        }
+                        else
+                        {
                             telaAtual = TITLE; // deve ir para tela de vitória
                             finalizouMapas = 1;
                         }
@@ -300,10 +367,12 @@ int main()
                 }
             }
             // Tela de Pause
-            else{
+            else
+            {
                 if(IsKeyPressed(KEY_TAB)) pausado = !pausado;
                 if(IsKeyPressed(KEY_C)) pausado = !pausado;
-                if(IsKeyPressed(KEY_L)){//load jogo
+                if(IsKeyPressed(KEY_L)) //load jogo
+                {
                     reseta_posicoes(recurso, monstros, bombas);
                     zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
                     pausado = 0;
@@ -314,14 +383,15 @@ int main()
                 if(IsKeyPressed(KEY_V)) telaAtual = TITLE;
                 if(IsKeyPressed(KEY_F)) deveFechar = 1;
             }
-        }break;
+        }
+        break;
         case ENDING:
             break;
         }
 
 
-            // ----------------------------------------- DESENHOS -----------------------------------------
-            // Atualiza frame e desenha
+        // ----------------------------------------- DESENHOS -----------------------------------------
+        // Atualiza frame e desenha
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
@@ -349,7 +419,7 @@ int main()
         {
 
             //desenha mapa
-            desenha_mapa(mapa, caminho, tijolo, baseF, portal);
+            desenha_mapa(mapa, caminho, tijolo, baseF, portal, cadeira);
             //desenha jogador
             DrawRectangle(player.x * TAM_GRID, player.y * TAM_GRID, TAM_GRID, TAM_GRID, GREEN);
             //desenha monstros
@@ -365,6 +435,9 @@ int main()
             DrawText("Vidas: ", 10, 10, 50, RED);
             DrawText("recursos: ", 10, 50, 50, RED);
             DrawText(TextFormat("%i", playerRecursos), 270, 50, 50, RED);
+            DrawText("cheat: ", 10, 90, 50, RED);
+            DrawText(TextFormat("%s", cheats), 270, 90, 50, RED);
+
             for (b=0; b<playerVidas; b++)
             {
                 multiplo = b * 40;
@@ -384,20 +457,22 @@ int main()
                 DrawText("VITORIA!", 190, 230, 180, RED);
                 DrawText("Enter para continuar", 190, 430, 50, RED);
             }
-            else if (pausado == 1){
+            else if (pausado == 1)
+            {
                 DrawRectangle(0, 0, LARGURA, ALTURA, cinzamorto);
                 DrawText("Pausado", 190, 130, 180, RED);
                 DrawText("C: Continuar\n\n\nL: Carregar ultimo jogo\n\n\nS: Salvar jogo\n\n\nV: Voltar ao menu inicial\n\n\nF: Sair", 190, 330, 50, RED);       // Ajeitar isso aqui @Arthur :)
             }
 
-        }break;
+        }
+        break;
         case ENDING:
             break;
         }
 
         EndDrawing();
-        }
+    }
 
-        CloseWindow();
-        return 0;
-        }
+    CloseWindow();
+    return 0;
+}

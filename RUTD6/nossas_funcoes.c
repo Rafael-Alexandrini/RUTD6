@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "raylib.h"
 
-void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal){
+void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal, Texture2D cadeira){
     int l, c;
     for (l = 0; l < N_LINHAS; l++){
         for (c = 0; c < N_COLUNAS; c++){
@@ -17,9 +17,9 @@ void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo,
                 case 'S':
                     DrawTexture(base, c * TAM_GRID, l * TAM_GRID, WHITE);
                     break;
-
                 case 'T':
-                    DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, BROWN);
+                    DrawTexture(cadeira, c * TAM_GRID, l * TAM_GRID, WHITE);
+                    break;
                 default:
                     DrawRectangle(c * TAM_GRID, l * TAM_GRID, TAM_GRID, TAM_GRID, fundo);
                     break;

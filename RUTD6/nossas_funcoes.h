@@ -8,7 +8,8 @@
 #define N_COLUNAS 60
 #define N_LINHAS 30
 #define TAM_GRID 20
-#define N_MAX_MONSTROS 4
+#define N_MAX_MONSTROS 50
+#define MAXCARAC 15
 #define PLAYER_VIDAS 1
 #define MAX_RECURSOS 100
 #define MAX_FONTES 5
@@ -17,7 +18,7 @@
 #define LOCAL_SAVE "./mapas/meusave.bin"
 
 
-void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal);
+void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal, Texture2D cadeira);
 
 void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]);
 
