@@ -11,7 +11,7 @@
 #define N_MAX_MONSTROS 50
 #define MAXCARAC 15
 #define PLAYER_VIDAS 1
-#define MAX_RECURSOS 100
+#define MAX_RECURSOS 50
 #define MAX_FONTES 5
 #define MAX_MAPAS 6
 #define PRIMEIRO_MAPA 1

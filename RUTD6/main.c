@@ -174,17 +174,17 @@ int main()
                 {
                     if (rapidin == 1 && IsKeyDown(KEY_LEFT_SHIFT)) // movimento com cheats
                     {
-                        if (IsKeyDown(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
-                        if (IsKeyDown(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
-                        if (IsKeyDown(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
-                        if (IsKeyDown(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
+                        if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
+                        if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
+                        if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
+                        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
                     }
                     else // movimento do jogador sem cheats
                     {
-                        if (IsKeyPressed(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
-                        if (IsKeyPressed(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
-                        if (IsKeyPressed(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
-                        if (IsKeyPressed(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
+                        if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
+                        if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
+                        if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
+                        if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
                     }
                     if (IsKeyPressed(KEY_G) && playerRecursos > 0) // G coloca bombas
                     {
