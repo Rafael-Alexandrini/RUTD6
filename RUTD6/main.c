@@ -418,15 +418,25 @@ int main()
             //desenha recursos
             for (i = 0; i < MAX_RECURSOS; i++)
                 DrawTexture(obstaculo, recurso[i].x * TAM_GRID, recurso[i].y * TAM_GRID, WHITE);
+
             //desenha HUD
             DrawText("Vidas: ", 10, 10, 50, RED);
-            DrawText("recursos: ", 10, 50, 50, RED);
-            DrawText(TextFormat("%i", playerRecursos), 270, 50, 50, RED);
+            DrawText("Vidas da base: ", 10, 50, 50, RED);
+            DrawText("recursos: ", 10, 90, 35, RED);
+            DrawText(TextFormat("%i", playerRecursos), 200, 90, 35, RED);
+            DrawText("monstros vivos: ", 10, 115, 35, RED);
+            DrawText(TextFormat("%i", monstros_vivos), 285, 115, 35, RED);
+
 
             for (b=0; b<playerVidas; b++)
             {
                 multiplo = b * 40;
                 DrawTexture(vidas, 170 + multiplo, 18, WHITE);
+            }
+            for (b=0; b<base.vidas; b++)
+            {
+                multiplo = b * 40;
+                DrawTexture(vidas, 380 + multiplo, 58, WHITE);
             }
 
             //Overlays de derrota, vitória e pause
@@ -446,7 +456,7 @@ int main()
             {
                 DrawRectangle(0, 0, LARGURA, ALTURA, cinzamorto);
                 DrawText("Pausado", 190, 130, 180, RED);
-                DrawText("C: Continuar\n\n\nL: Carregar ultimo jogo\n\n\nS: Salvar jogo\n\n\nV: Voltar ao menu inicial\n\n\nF: Sair", 190, 330, 50, RED);       // Ajeitar isso aqui @Arthur :)
+                DrawText("C: Continuar\n\n\nL: Carregar ultimo jogo\n\n\nS: Salvar jogo\n\n\nV: Voltar ao menu inicial\n\n\nF: Sair", 190, 330, 50, RED);
             }
 
         }
