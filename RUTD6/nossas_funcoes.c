@@ -6,7 +6,7 @@
 void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal, Texture2D cadeira){
     int l, c;
     for (l = 0; l < N_LINHAS; l++){
-        for (c = 0; c < N_COLUNAS; c++){
+        for (c = 0; c < N_COLUNAS; c++){    // Desenha cada caractere
             switch(mapa[l][c]){
                 case 'W':
                     DrawTexture(tijolo, c * TAM_GRID, l * TAM_GRID, WHITE);
@@ -32,7 +32,7 @@ void desenha_mapa(char mapa[N_LINHAS][N_COLUNAS], Color fundo, Texture2D tijolo,
 
 void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]){
     int podeMover = 1;
-
+    // Movimento do jogador: checa se vai bater numa parede e move se pode
     if ((*pX + dirX) < 0 || (*pX + dirX) >= N_COLUNAS || (*pY + dirY) < 0 || (*pY + dirY) >= N_LINHAS){
         podeMover = 0;
     }
@@ -59,7 +59,7 @@ void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[N_LINHAS][N_COL
 void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]){
     int i;
     int indHole = 0;
-
+    // Teleporta jogador ao portal mais longe
     if (dirX == 1){
         for (i = 0; i < N_COLUNAS; i++){
             if (mapa[*pY][i] == 'H')
@@ -89,10 +89,10 @@ void entra_portal(int *pX, int *pY, int dirX, int dirY, char mapa[N_LINHAS][N_CO
 }
 
 void move_inimigo(struct Inimigo *pInimigo, char mapa[N_LINHAS][N_COLUNAS]){
-    int dirXog = pInimigo->dirx; // guarda temporariamente direções originais dos inimigos
+    int dirXog = pInimigo->dirx;
     int dirYog = pInimigo->diry;
-
-
+    // Movimento do inimigo
+    // tenta mover na direção original
     // se não consegue mover na direção original, tenta ir pra uma ou outra. se não consegue, volta. se ainda não, para
     if(pode_mover_inimigo(pInimigo->x, pInimigo->y, pInimigo->dirx, pInimigo->diry, mapa)){   // anda reto
         pInimigo->x += pInimigo->dirx;
@@ -146,7 +146,7 @@ void nova_direcao(int *dirX, int *dirY){
 int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[N_LINHAS][N_COLUNAS]){
     int podeMover = 1;
 
-    // se está dentro do mapa
+    // Checa se inimigo está dentro do mapa e se não vai bater numa parede
     if ((pX + dirX) < 0 || (pX + dirX) >= N_COLUNAS || (pY + dirY) < 0 || (pY + dirY) >= N_LINHAS){
         podeMover = 0;
     }
@@ -166,7 +166,7 @@ int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[N_LINHAS][N
 
 void pega_recurso (struct posicao *recurso)
 {
-
+    // move recurso para posição fora do mapa
     recurso->x = -20;
     recurso->y = -20;
 
@@ -175,6 +175,7 @@ void pega_recurso (struct posicao *recurso)
 
 void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba)
 {
+    // Move inimigo e bomba para posições fora do mapa
         inimigo->x = -20;
         inimigo->y = -20;
         bomba->x = -10;
@@ -183,7 +184,7 @@ void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba)
 }
 
 void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS], struct Inimigo monstros[N_MAX_MONSTROS], int *n_monstros_spawnados, int *monstros_vivos)
-{
+{       // Procura no mapa e posiciona diversos elementos do jogo
     int l, c;
     int i = 0;
     int b = 0;
@@ -230,17 +231,17 @@ void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struc
 }
 
 void zera_estado(int *vitoria, int *gameover, int *monstros_vivos, int *n_monstros_spawnados)
-{
+{   // Zera variáveis
     *vitoria = 0;
     *gameover = 0;
     *monstros_vivos = 0;
     *n_monstros_spawnados = 0;
 }
 
-int carrega_mapa(char mapa[N_LINHAS][N_COLUNAS], int nMapa){
+int carrega_mapa(char mapa[N_LINHAS][N_COLUNAS], int nMapa){    // Carrega mapa de um arquivo de texto
     int conseguiuAbrir = 1;
     char nomeArquivoText[30];
-    sprintf(nomeArquivoText, "mapas/mapa%02d.txt", nMapa);
+    sprintf(nomeArquivoText, "mapas/mapa%d.txt", nMapa);
     FILE *arquivoText;
     arquivoText = fopen(nomeArquivoText, "r");
 
@@ -284,13 +285,13 @@ void reseta_posicoes(struct posicao recurso[MAX_RECURSOS], struct Inimigo monstr
     }
 }
 
-void salva_jogo(struct Save save){
+void salva_jogo(struct Save save){  // Salva elementos do jogo atual em arquivo binário
     FILE *arquivoBin = fopen(LOCAL_SAVE, "w");
     if (arquivoBin != NULL){
         fwrite(save.spawnwer, sizeof(struct posicao), 1, arquivoBin);
         fwrite(save.jogador, sizeof(struct posicao), 1, arquivoBin);
         fwrite(save.vidasJogador, sizeof(int), 1, arquivoBin);
-        fwrite(save.recursosJogardor, sizeof(int), 1, arquivoBin);
+        fwrite(save.recursosJogador, sizeof(int), 1, arquivoBin);
         fwrite(save.base, sizeof(struct base), 1, arquivoBin);
         fwrite(save.monstros, sizeof(struct Inimigo), N_MAX_MONSTROS, arquivoBin);
         fwrite(save.n_monstros_vivos, sizeof(int), 1, arquivoBin);
@@ -306,13 +307,13 @@ void salva_jogo(struct Save save){
         printf("Erro no salvamento!\n");
 }
 
-void carrega_save(struct Save save){
+void carrega_save(struct Save save){ // Carrega elementos do jogo atual em arquivo binário
     FILE *arquivoBin = fopen(LOCAL_SAVE, "r");
     if (arquivoBin != NULL){
         fread(save.spawnwer, sizeof(struct posicao), 1, arquivoBin);
         fread(save.jogador, sizeof(struct posicao), 1, arquivoBin);
         fread(save.vidasJogador, sizeof(int), 1, arquivoBin);
-        fread(save.recursosJogardor, sizeof(int), 1, arquivoBin);
+        fread(save.recursosJogador, sizeof(int), 1, arquivoBin);
         fread(save.base, sizeof(struct base), 1, arquivoBin);
         fread(save.monstros, sizeof(struct Inimigo), N_MAX_MONSTROS, arquivoBin);
         fread(save.n_monstros_vivos, sizeof(int), 1, arquivoBin);

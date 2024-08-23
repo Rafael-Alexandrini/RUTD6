@@ -28,11 +28,11 @@ struct base
 };
 
 struct Save
-{
+{   // Conjunto de ponteiros para elementos do jogo
     struct posicao *spawnwer;
     struct posicao *jogador;
     int *vidasJogador;
-    int *recursosJogardor;
+    int *recursosJogador;
     struct base *base;
     struct Inimigo *monstros; // array de monstros
     int *n_monstros_vivos;

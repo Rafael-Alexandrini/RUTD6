@@ -32,8 +32,6 @@ int pode_mover_inimigo(int pX, int pY, int dirX, int dirY, char mapa[N_LINHAS][N
 
 void pega_recurso (struct posicao *recurso);
 
-void base_toma_dano (struct Inimigo *inimigo, struct base *base);
-
 void mata_monstro (struct Inimigo *inimigo, struct bomba *bomba);
 
 void acha_no_mapa (char mapa[N_LINHAS][N_COLUNAS], struct posicao *player, struct posicao *spawner, struct base *base, struct posicao recurso[MAX_RECURSOS], struct Inimigo monstros[N_MAX_MONSTROS], int *n_monstros_spawnados, int *monstros_vivos);

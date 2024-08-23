@@ -62,11 +62,9 @@ int main()
     struct posicao recurso[MAX_RECURSOS] = {{10, 10}, {20, 30}};
     struct Inimigo monstros[N_MAX_MONSTROS] = {};
     struct bomba bombas[MAX_RECURSOS] = {{-1, -1, 1}, {-1, -1, 1}};
+    reseta_posicoes(recurso, monstros, bombas); // inicializa as posições
 
-    reseta_posicoes(recurso, monstros, bombas);
-
-
-    // inicialização de variáveis                   // a gente tem que ajeitar isso aqui eu acho
+    // inicialização de variáveis
     int l, c, i, b;
     int q = 0;
     int indBombas = 0;
@@ -101,7 +99,7 @@ int main()
     salvamento.spawnwer = &spawner;
     salvamento.jogador = &player;
     salvamento.vidasJogador = &playerVidas;
-    salvamento.recursosJogardor= &playerRecursos;
+    salvamento.recursosJogador= &playerRecursos;
     salvamento.base = &base;
     salvamento.monstros = monstros;
     salvamento.n_monstros_vivos = &monstros_vivos;
@@ -142,17 +140,16 @@ int main()
             if (IsKeyDown(KEY_Q)) // sair do jogo
                 deveFechar = 1;
 
-            if (IsKeyDown(KEY_N))
+            if (IsKeyDown(KEY_N)) // novo jogo sem nada salvo
             {
-                // novo jogo sem nada salvo        // fazer uma função pra isso tudo, já q também é usado qnd passa de fase
                 nMapa = PRIMEIRO_MAPA;
                 carrega_mapa(mapa, nMapa);
                 reseta_posicoes(recurso, monstros, bombas);
                 zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
                 acha_no_mapa(mapa, &player, &spawner, &base, recurso, monstros, &n_monstros_spawnados, &monstros_vivos);
-                pausado = 0;                             // talvez mudar isso (colocar no zera_estado???
-                playerRecursos = 0;                         // aqui também
-                playerVidas = PLAYER_VIDAS;                            // e mais isso
+                pausado = 0;
+                playerRecursos = 0;
+                playerVidas = PLAYER_VIDAS;
                 finalizouMapas = 0;
                 telaAtual = GAMEPLAY;
             }
@@ -170,26 +167,26 @@ int main()
         }
         case GAMEPLAY:
         {
-            if (!pausado)       //Lógica padrão do jogo, não pausado
+            if (!pausado)       //Lógica padrão do jogo não pausado
             {
                 // Ações do Jogador
                 if (gameover == 0 && vitoria == 0)
                 {
-                    if (rapidin == 1 && IsKeyDown(KEY_LEFT_SHIFT))
+                    if (rapidin == 1 && IsKeyDown(KEY_LEFT_SHIFT)) // movimento com cheats
                     {
                         if (IsKeyDown(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
                         if (IsKeyDown(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
                         if (IsKeyDown(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
                         if (IsKeyDown(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
                     }
-                    else
+                    else // movimento do jogador sem cheats
                     {
                         if (IsKeyPressed(KEY_UP)) tenta_mover(&player.x, &player.y, 0, -1, mapa);
                         if (IsKeyPressed(KEY_DOWN)) tenta_mover(&player.x, &player.y, 0, 1, mapa);
                         if (IsKeyPressed(KEY_LEFT)) tenta_mover(&player.x, &player.y, -1, 0, mapa);
                         if (IsKeyPressed(KEY_RIGHT)) tenta_mover(&player.x, &player.y, 1, 0, mapa);
                     }
-                    if (IsKeyPressed(KEY_G) && playerRecursos > 0)
+                    if (IsKeyPressed(KEY_G) && playerRecursos > 0) // G coloca bombas
                     {
                         bombas[indBombas].x = player.x;
                         bombas[indBombas].y = player.y;
@@ -198,16 +195,16 @@ int main()
                         if (indBombas >= MAX_RECURSOS)
                             indBombas = 0;
                     }
-                    if(IsKeyPressed(KEY_TAB)) pausado = !pausado;
+                    if(IsKeyPressed(KEY_TAB)) pausado = !pausado;  // tab pausa o jogo
                 }
 
 
-                // CONTADOR DE TICKS (roda 16 vezes por segundo)
+                // CONTADOR DE TICKS (roda 16 vezes por segundo, ficando mais rápido a cada nível)
                 if ((GetTime() > ultimo_tick + 1/(16.0 + nMapa * 3)) && gameover == 0)
                 {
                     ultimo_tick = GetTime();
                     tickCounter++;
-                    // A cada X ticks: movimento dos inimigos
+                    // A cada 8 ticks: movimento dos inimigos
                     if(tickCounter % 8 == 0)
                     {
                         for (i=0; i<N_MAX_MONSTROS; i++)
@@ -215,6 +212,7 @@ int main()
                             move_inimigo(&(monstros[i]), mapa);
                         }
                     }
+                    // A cada 24 ticks: spawn dos inimigos
                     if(tickCounter % 24 == 0 && n_monstros_spawnados < nMapa * 2)
                     {
                         monstros[n_monstros_spawnados].x = spawner.x;
@@ -226,8 +224,8 @@ int main()
                     }
                 }
 
+                // Sistema para ler cheatcodes
                 key = tolower(GetCharPressed());
-
                 if (key > 0)
                 {
                     if ((key >= 32) && (key<=125) && contcarac < MAXCARAC)
@@ -237,28 +235,24 @@ int main()
                         contcarac++;
                     }
                 }
-
                 if(IsKeyPressed(KEY_BACKSPACE))
                 {
                     contcarac--;
                     if (contcarac < 0) contcarac = 0;
                     cheats[contcarac] = '\0';
                 }
-
                 if (strcmp(cheats, "amor venceu") == 0)
                 {
                     playerVidas = playerVidas + 10;
                     strcpy(cheats, "\0");
                     contcarac = 0;
                 }
-
-                if (strcmp(cheats, "setembro") == 0)
+                if (strcmp(cheats, "creeper") == 0)
                 {
                     playerRecursos = playerRecursos + 10;
                     strcpy(cheats, "\0");
                     contcarac = 0;
                 }
-
                 if (strcmp(cheats, "velocidade") == 0)
                 {
                     rapidin = 1;
@@ -266,7 +260,7 @@ int main()
                     contcarac = 0;
                 }
 
-                // Vê se player deve tomar dano e tempo de invincibilidade
+                // Vê se player deve tomar dano e conta tempo de invincibilidade
                 for (i = 0; i < N_MAX_MONSTROS; i++)
                 {
                     if ((monstros[i].x == player.x && monstros[i].y == player.y) && podeTomarDano == 1)
@@ -306,7 +300,7 @@ int main()
 
 
 
-                // checa colisão dos monstro com bombas e base
+                // checa colisão dos monstro com bombas e com base
                 for (a = 0; a < N_MAX_MONSTROS; a++)
                 {
                     if (monstros[a].x == base.x && monstros[a].y == base.y)
@@ -317,7 +311,6 @@ int main()
                         base.vidas--;
                         monstros_vivos--;
                     }
-
                     for (i = 0; i < MAX_RECURSOS; i++)
                     {
                         if (monstros[a].x == bombas[i].x && monstros[a].y == bombas[i].y)
@@ -330,17 +323,17 @@ int main()
                 }
 
 
-                // Derrota
-                if (playerVidas <= 0 || base.vidas == 0)
+                // Checa se o player perdeu: DERROTA
+                if (playerVidas <= 0 || base.vidas <= 0)
                 {
                     playerVidas = 0;
                     gameover = 1;
                     if (IsKeyPressed(KEY_ENTER))
                     {
-                        telaAtual = TITLE; // vai pro início se perder
+                        telaAtual = TITLE;
                     }
                 }
-                // Vitória
+                // Checa se o player venceu: VITÓRIA
                 if (monstros_vivos == 0 && n_monstros_spawnados >= nMapa * 2)
                 {
                     vitoria = 1;
@@ -348,7 +341,7 @@ int main()
                     {
                         nMapa++;
                         playerVidas++;
-                        if (nMapa <= MAX_MAPAS)
+                        if (nMapa <= MAX_MAPAS) // Vai para o próximo mapa
                         {
                             carrega_mapa(mapa, nMapa);
                             indBombas = 0;
@@ -358,29 +351,27 @@ int main()
                             base.vidas = 3;
                         }
                         else
-                        {
-                            telaAtual = TITLE; // deve ir para tela de vitória
+                        {   // Vai para a tela final de vitória se acabaram os mapas
+                            telaAtual = TITLE;
                             finalizouMapas = 1;
                         }
                     }
                 }
             }
-            // Tela de Pause
-            else
+            else            // Tela de Pause
             {
-                if(IsKeyPressed(KEY_TAB)) pausado = !pausado;
-                if(IsKeyPressed(KEY_C)) pausado = !pausado;
-                if(IsKeyPressed(KEY_L)) //load jogo
-                {
+                if(IsKeyPressed(KEY_TAB)) pausado = !pausado; // tab despausa
+                if(IsKeyPressed(KEY_C)) pausado = !pausado; // C despausa
+                if(IsKeyPressed(KEY_L)){                    // L Carrega jogo salvo
                     reseta_posicoes(recurso, monstros, bombas);
                     zera_estado(&vitoria, &gameover, &monstros_vivos, &n_monstros_spawnados);
                     pausado = 0;
                     carrega_save(salvamento);
                     carrega_mapa(mapa, nMapa);
                 }
-                if(IsKeyPressed(KEY_S)) salva_jogo(salvamento);
-                if(IsKeyPressed(KEY_V)) telaAtual = TITLE;
-                if(IsKeyPressed(KEY_F)) deveFechar = 1;
+                if(IsKeyPressed(KEY_S)) salva_jogo(salvamento); // S Salva jogo
+                if(IsKeyPressed(KEY_V)) telaAtual = TITLE;      // V Volta para tela inicial
+                if(IsKeyPressed(KEY_F)) deveFechar = 1;         // F Fecha o jogo
             }
         }
         break;
@@ -395,9 +386,8 @@ int main()
 
         switch(telaAtual)
         {
-        case TITLE:
+        case TITLE: // Tela de título
         {
-
             DrawTexture(titleScreen, 0, 0, WHITE);
             DrawRectangle(0, 0, LARGURA, ALTURA, branco_transparente);
             DrawText("RUTD 6", (LARGURA/2 - MeasureText("RUTD6", 150)/2), 20, 150, RED);
@@ -405,6 +395,7 @@ int main()
             DrawText("Q = Sair do Jogo", 50, (ALTURA/2 + 50), 50, RED);
             DrawText("C = Carregar Jogo", 50, (ALTURA/2 + 100), 50, RED);
             DrawText("N = Novo Jogo", 50, (ALTURA/2 + 150), 50, RED);
+            // Frases de derrota e vitória
             if (gameover == 1)
                 DrawText("Voce morreu.", 10, 170, 50, RED);
             if (finalizouMapas == 1)
@@ -431,8 +422,6 @@ int main()
             DrawText("Vidas: ", 10, 10, 50, RED);
             DrawText("recursos: ", 10, 50, 50, RED);
             DrawText(TextFormat("%i", playerRecursos), 270, 50, 50, RED);
-            DrawText("cheat: ", 10, 90, 50, RED);
-            DrawText(TextFormat("%s", cheats), 270, 90, 50, RED);
 
             for (b=0; b<playerVidas; b++)
             {
