@@ -1,11 +1,12 @@
 #include "raylib.h"
 #include "nossas_funcoes.h"
+#include "nossas_funcoes.c"
 #include "estruturas.h"
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MAX_TILES 4
+#define MAX_TILES 7
 
 void escreve(char mapa[31][61], FILE *arq_mapa);
 
@@ -70,8 +71,8 @@ char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
 
     struct posicao mouse = {};
     int indTileSelecionada = 0;
-    char tilePossiveis[MAX_TILES] = {'W', 'H', 'S', 'M'};
-    Texture2D textTilePossiveis[MAX_TILES] = {tijolo, portal, base, texturas[2]};
+    char tilePossiveis[MAX_TILES] = {'W', 'H', 'S', 'M', 'R', 'T', 'J'};
+    Texture2D textTilePossiveis[MAX_TILES] = {tijolo, portal, base, texturas[2], obstaculo, texturas[3], texturas[1]};
 
 
     while(!WindowShouldClose())
@@ -99,7 +100,7 @@ char mapa[N_LINHAS + 1][N_COLUNAS + 1] = {
         // Atualiza frame e desenha
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        desenha_mapa(mapa, caminho, tijolo, base, portal);
+        desenha_mapa(mapa, caminho, tijolo, base, portal, obstaculo);
         DrawTexture(textTilePossiveis[indTileSelecionada], mouse.x * TAM_GRID, mouse.y * TAM_GRID, WHITE);
         DrawText(TextFormat("%i", indTileSelecionada), 270, 50, 50, RED);
         EndDrawing();

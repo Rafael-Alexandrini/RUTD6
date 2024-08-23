@@ -14,7 +14,7 @@
 
 void funcao_exemplo();
 
-void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal);
+void desenha_mapa(char mapa[31][61], Color fundo, Texture2D tijolo, Texture2D base, Texture2D portal, Texture2D obstaculo);
 
 void tenta_mover(int *pX, int *pY, int dirX, int dirY, char mapa[31][61]);
 
